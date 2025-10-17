@@ -2,6 +2,7 @@
     File: src/main.cpp
 */
 #include "Arduino.h"
+#include "user_config_override"
 #include "Audio.h"
 #include "WiFi.h"
 #include "psram_unique_ptr.hpp"
@@ -13,8 +14,8 @@
 #endif
 
 
-String ssid =     "xxxxx";
-String password = "xxxxx";
+String ssid =     MY_WIFI_SSID;
+String password = MY_WIFI_PWD;
 
 Audio audio;
 
