@@ -1,0 +1,30 @@
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x8 (TG1WDT_SYS_RST),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x40379d2e
+  #0  0x40379d2e in _xt_handle_exc at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/xtensa/xtensa_vectors.S:727
+
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x1024
+load:0x403c8700,len:0xaf0
+load:0x403cb700,len:0x2d24
+entry 0x403c8898
+-------------------------------------------------------- wifi init th
+Display> begin() ... [0;31m[  1054][E][esp32-hal-gpio.c:176] __digitalWrite(): IO 38 is not set as GPIO. Execute digitalMode(38, OUTPUT) first.[0m
+Screen size 320 * 170 complete
+ESP-ROM:esp32s3-20210327
+Build:Mar 27 2021
+rst:0x8 (TG1WDT_SYS_RST),boot:0x8 (SPI_FAST_FLASH_BOOT)
+Saved PC:0x4038e21f
+  #0  0x4038e21f in _xt_context_save at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/xtensa/xtensa_context.S:154
+
+SPIWP:0xee
+mode:DIO, clock div:1
+load:0x3fce2820,len:0x1024
+load:0x403c8700,len:0xaf0
+load:0x403cb700,len:0x2d24
+entry 0x403c8898
+-------------------------------------------------------- wifi init th
+Display> begin() ... [0;31m[  1054][E][esp32-hal-gpio.c:176] __digitalWrite(): IO 38 is not set as GPIO. Execute digitalMode(38, OUTPUT) first.[0m
+Screen size 320 * 170 complete
