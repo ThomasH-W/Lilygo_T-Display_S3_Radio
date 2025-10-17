@@ -1,0 +1,19 @@
+#include "Arduino.h"
+
+
+void setup() {
+    Serial.begin(MONITOR_SPEED);
+    while (!Serial);// auf serielle Verbindung warten
+    delay(1000);
+    Serial.println("setup>> ....");
+    
+    Serial.println("setup>> Audio connected");
+
+}
+
+void loop() {
+    Serial.println("loop>> ....");
+       delay(1000);
+    vTaskDelay(1);
+}
+
