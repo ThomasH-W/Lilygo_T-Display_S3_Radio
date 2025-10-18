@@ -478,7 +478,7 @@ void audio_eof_speech(const char *info)
 }
 
 
-// callbacks
+// callbacks xxx
 void my_audio_info(Audio::msg_t m) {
     Serial.printf("audio::my_audio_info: %s: %s\n", m.s, m.msg);
     if(strcmp(m.s, "streamtitle") == 0) {
