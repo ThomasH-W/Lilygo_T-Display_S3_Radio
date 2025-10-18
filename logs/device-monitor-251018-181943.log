@@ -159,3 +159,4 @@ myDisplay::clear
 NTP-Value Time: 18:20 / Date: 18.10.
 myDisplay::Gui1 drawstring >18:20<
 NTP-loop>  Time:  / Date: 18.10.
+NTP-loop>  Time: 18:20 / Date: 18.10.

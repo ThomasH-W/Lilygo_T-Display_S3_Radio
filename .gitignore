@@ -6,6 +6,7 @@
 .vscode/ipch
 .vscode/.pioinit
 include/user_config_override.h
+logs/
 # Build and cache
 *.pyc
 __pycache__/
