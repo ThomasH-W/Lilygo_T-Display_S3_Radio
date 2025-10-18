@@ -2,7 +2,21 @@
 #define _GPIO_PINS_H
 
 // ------------------------------------------------------------------------------------------------------------------------------------
+/*
+https://github.com/espressif/arduino-esp32/blob/master/variants/lilygo_t_display_s3/pins_arduino.h
+
+static const uint8_t BUTTON_1 = 0;
+static const uint8_t BUTTON_2 = 14;
+static const uint8_t BAT_VOLT = 4;
+
+
+*/
+
 #ifdef ESP32
+#define PIN_LED 2 // Pin D2 mapped to pin GPIO2/ADC12 of ESP32, control on-board LED
+#endif
+
+#ifdef ESP32_dummy
 
 //See file .../hardware/espressif/esp32/variants/(esp32|doitESP32devkitV1)/pins_arduino.h
 // #define LED_BUILTIN 2 // Pin D2 mapped to pin GPIO2/ADC12 of ESP32, control on-board LED
@@ -62,7 +76,7 @@
 #define PIN_SDA 21 // Pin SDA mapped to pin GPIO21/SDA of ESP32
 
 // ------------------------------------------------------------------------------------------------------------------------------------
-#else
+#elseif defined(ESP8266)
 //PIN_D0 can't be used for PWM/I2C
 #define PIN_D0 16  // Pin D0 mapped to pin GPIO16/USER/WAKE of ESP8266. This pin is also used for Onboard-Blue LED. PIN_D0 = 0 => LED ON
 #define PIN_D1 5   // Pin D1 mapped to pin GPIO5 of ESP8266

@@ -37,7 +37,7 @@ const char *setupFileName = WIFI_SETUP_FILE;
 
 #include <ESPAsyncWebServer.h>
 AsyncWebServer webServer(80);
-AsyncWebSocket ws("/");
+AsyncWebSocket webSocket("/");
 AsyncWebSocketClient *globalClient = NULL;
 
 // #include <ArduinoJson.h> // https://github.com/bblanchon/ArduinoJson
@@ -333,32 +333,32 @@ https://techtutorialsx.com/2018/09/13/esp32-arduino-web-server-receiving-data-fr
    *    x -> Bidirectional ESP to Website and Website to ESP
    */
 
-// wsSendTuner(au.radioCurrentStation + 1, au.radioCurrentVolume);
+// webSocketSendTuner(au.radioCurrentStation + 1, au.radioCurrentVolume);
 // --------------------------------------------------------------------------
-void wsSendTuner(int presetNo, int volume)
+void webSocketSendTuner(int presetNo, int volume)
 {
-    Serial.printf("wifi::wsSendTuner> Preset %d , Volume %d\n", presetNo, volume);
-    ws.printfAll("station_select=%d", presetNo);
-    ws.printfAll("volume=%d", volume);
+    Serial.printf("wifi::webSocketSendTuner> Preset %d , Volume %d\n", presetNo, volume);
+    webSocket.printfAll("station_select=%d", presetNo);
+    webSocket.printfAll("volume=%d", volume);
 }
 
 // --------------------------------------------------------------------------
-void wsSendArtistTitle(char *Artist, char *SongTitle)
+void webSocketSendArtistTitle(char *Artist, char *SongTitle)
 {
     int strLen = strlen(SongTitle);
-    Serial.printf("wifi::wsSendArtistTitle> SongTitle >%s< (len: %d) Artist >%s<\n", SongTitle, strLen, Artist);
+    Serial.printf("wifi::webSocketSendArtistTitle> SongTitle >%s< (len: %d) Artist >%s<\n", SongTitle, strLen, Artist);
 
     if (strLen)
     {
-        ws.printfAll("meta_playing=%s@%s", Artist, SongTitle);
+        webSocket.printfAll("meta_playing=%s@%s", Artist, SongTitle);
         getCoverBMID(Artist, SongTitle);
     }
     else
-        ws.printfAll("meta_playing=@");
+        webSocket.printfAll("meta_playing=@");
 }
 
 // --------------------------------------------------------------------------
-void wsBroadcast()
+void webSocketBroadcast()
 {
     audio_ws_tuner();
     audio_ws_meta();
@@ -366,19 +366,19 @@ void wsBroadcast()
 } // end of function
 
 // --------------------------------------------------------------------------
-void onWsEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
+void onwebSocketEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len)
 {
 
     if (type == WS_EVT_CONNECT)
     {
 
-        Serial.println("onWsEvent> Websocket client connection received");
+        Serial.println("onwebSocketEvent> Websocket client connection received");
         client->text("Hello from ESP32 Server");
-        wsBroadcast();
+        webSocketBroadcast();
     }
     else if (type == WS_EVT_DISCONNECT)
     {
-        Serial.println("onWsEvent> Client disconnected");
+        Serial.println("onwebSocketEvent> Client disconnected");
     }
     else if (type == WS_EVT_DATA)
     {
@@ -465,7 +465,9 @@ void handleRadioConfig(AsyncWebServerRequest *request)
 // --------------------------------------------------------------------------
 void setup_webServer()
 {
-    Serial.print(F("setup_webServer> Inizializing FS..."));
+    Serial.print(F("wifi::setup_webServer> Inizializing FS..."));
+    /*
+    // No need as mounted before: 3834][W][LittleFS.cpp:58] begin(): LittleFS Already Mounted!
     if (LittleFS.begin())
     {
         Serial.println(F("done."));
@@ -474,6 +476,7 @@ void setup_webServer()
     {
         Serial.println(F("fail."));
     }
+    */
 
     webServer.on("/radio", handleRadioConfig);
 
@@ -486,15 +489,15 @@ void setup_webServer()
     webServer.serveStatic("/", LittleFS, "/").setDefaultFile("index.html");
     webServer.onNotFound(handleNotFound);
 
-    ws.onEvent(onWsEvent);
-    webServer.addHandler(&ws);
+    webSocket.onEvent(onwebSocketEvent);
+    webServer.addHandler(&webSocket);
 
     // AsyncElegantOTA.setAuth(OTA_USER, OTA_PASS);
    // ElegantOTA.begin(&webServer,OTA_USER, OTA_PASS);
     // AsyncElegantOTA.begin(&webServer); // no credentials required
 
     webServer.begin();
-    Serial.println("HTTP server started");
+    Serial.println("wifi::setup_webServer> HTTP server started");
 
 } // end of function
 
@@ -604,6 +607,7 @@ void save_wifi_preferences()
 // retrieve last radio station before reboot
 void setup_wifi_preferences()
 {
+    Serial.printf("\n-------------------------------- establish WiFi ------------------------------------------\n");
     Serial.printf("wifi::setup_wifi_preferences> read nvs\n");
     /* Start a namespace "iotsharing"in Read-Write mode: set second parameter to false Note: Namespace name is limited to 15 chars */
     wifiPreferences.begin("iotsharing", false);

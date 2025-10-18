@@ -1,0 +1,43 @@
+NTP> Saturday, October 18 2025 17:44:13
+18.10.2025 17:44:13
+audio::setup_preferences> Preset 2
+audio::setup_preferences> Volume 10
+audio::setup_preferences> Number of restart times: 16
+setup_audio> begin
+
+-------------------------------- Staion Select ------------------------------------------
+audio::station_select> requested preset 3 of 8
+audio::station_select> Preset 3 : http://mp3-live.swr3.de/swr3_m.m3u
+audio::station_select> au.radioTitleSeperator /
+audio::station_select> au.radioArtistFirst 0
+audio::station_select> presetNo 3
+audio::station_select> mqtt publish >3<
+
+-------------------------------- Get System Info------------------------------------------
+Heap: Free:161135, Min:161035, Size:354355, Alloc:86016
+audio::station_select> set volume (0)
+audio::station_select> URL >http://mp3-live.swr3.de/swr3_m.m3u<
+audio::station_select> conected<
+audio::station_select> mqtt publish >SWR3<
+audio::station_select> mqtt wsSendArtistTitle SWR3 /  
+wifi::wsSendArtistTitle> SongTitle >< (len: 0) Artist >SWR3<
+wifi::wsSendTuner> Preset 3 , Volume 10
+main::main_displayUpdate
+main::displayReset
+myDisplay::clear
+listDir::Listing directory> /
+  FILE: fallbackCover.jpg  SIZE: 14385  LAST WRITE: 2025-10-13 15:43:36
+  FILE: favicon.ico  SIZE: 1150  LAST WRITE: 2025-10-13 15:43:36
+  FILE: index.html  SIZE: 1640  LAST WRITE: 2025-10-13 15:43:36
+  FILE: main.js  SIZE: 12701  LAST WRITE: 2025-10-13 15:43:36
+  FILE: radio.html  SIZE: 1029  LAST WRITE: 2025-10-13 15:43:36
+  FILE: radio.js  SIZE: 3955  LAST WRITE: 2025-10-13 15:43:36
+  FILE: setup.ini  SIZE: 1672  LAST WRITE: 2025-10-13 15:43:36
+  FILE: style.css  SIZE: 7361  LAST WRITE: 2025-10-13 15:43:36
+rotary::setup_rotary> done
+myDisplay::clear
+ (-89 db) wifi> signal    : 1 = -89 dBm
+NTP-Value Time: 17:44 / Date: 18.10.
+myDisplay::Gui1 drawstring >17:44<
+NTP-loop>  Time:  / Date: 18.10.
+NTP-loop>  Time: 17:45 / Date: 18.10.

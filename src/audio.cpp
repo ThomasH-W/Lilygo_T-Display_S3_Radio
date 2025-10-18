@@ -185,7 +185,7 @@ void audio_mode(int mode, int value)
     sprintf(buf, "%d", au.radioCurrentVolume);
     mqtt_pub_tele("Volume", buf);
     main_displayUpdate(false);
-    wsSendTuner(au.radioCurrentStation + 1, au.radioCurrentVolume);
+    webSocketSendTuner(au.radioCurrentStation + 1, au.radioCurrentVolume);
 } // end of function
 
 //-----------------------------------------------------------------------------------------
@@ -302,8 +302,8 @@ void station_select(int stationID)
         mqtt_pub_tele("Preset", setupRadio[stationID].RadioName);
         strncpy(au.radioName, setupRadio[stationID].RadioName, sizeof(au.radioName));
         serial_d_printf("audio::station_select> mqtt wsSendArtistTitle %s / %s \n", au.radioArtist, au.radioSongTitle);
-        wsSendArtistTitle(au.radioArtist, au.radioSongTitle);
-        wsSendTuner(au.radioCurrentStation + 1, au.radioCurrentVolume);
+        webSocketSendArtistTitle(au.radioArtist, au.radioSongTitle);
+        webSocketSendTuner(au.radioCurrentStation + 1, au.radioCurrentVolume);
 
         if (au.radioCurrentVolume == 0)
             au.radioCurrentVolume = AUDIO_DEFAULT_VOLUME;
@@ -336,13 +336,13 @@ void station_select(int stationID)
 //-----------------------------------------------------------------------------------------
 void audio_ws_tuner()
 {
-    wsSendTuner(au.radioCurrentStation + 1, au.radioCurrentVolume);
+    webSocketSendTuner(au.radioCurrentStation + 1, au.radioCurrentVolume);
 }
 
 //-----------------------------------------------------------------------------------------
 void audio_ws_meta()
 {
-    wsSendArtistTitle(au.radioArtist, au.radioSongTitle);
+    webSocketSendArtistTitle(au.radioArtist, au.radioSongTitle);
 }
 //-----------------------------------------------------------------------------------------
 // optional - THX

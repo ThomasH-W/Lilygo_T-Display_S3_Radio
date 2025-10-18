@@ -196,3 +196,78 @@ myDisplay::clear
 NTP-Value Time: 17:12 / Date: 18.10.
 myDisplay::Gui1 drawstring >17:12<
 NTP-loop>  Time:  / Date: 18.10.
+handleEvent(): pin: 14; eventType: 0; buttonState: 0
+handleEvent> unknown for pin 14 & 0
+handleEvent(): pin: 14; eventType: 1; buttonState: 1
+handleEvent> preset_up for pin 14
+audio::audio_mode> preset: current 6 -> requested 7
+
+-------------------------------- Staion Select ------------------------------------------
+audio::station_select> requested preset 8 of 8
+audio::station_select> Preset 8 : http://192.168.178.1:49200/ST/AUDIO/DLNA-1-0/mp3.ffh.de/radioffh/hqlivestream.mp3
+audio::station_select> au.radioTitleSeperator -
+audio::station_select> au.radioArtistFirst 1
+audio::station_select> presetNo 8
+audio::station_select> mqtt publish >8<
+
+-------------------------------- Get System Info------------------------------------------
+Heap: Free:158859, Min:157391, Size:354355, Alloc:86016
+audio::station_select> set volume (0)
+audio::station_select> URL >http://192.168.178.1:49200/ST/AUDIO/DLNA-1-0/mp3.ffh.de/radioffh/hqlivestream.mp3<
+audio::station_select> conected<
+audio::station_select> mqtt publish >ffh - FritzBox<
+audio::station_select> mqtt wsSendArtistTitle ffh - FritzBox /  
+wifi::wsSendArtistTitle> SongTitle >< (len: 0) Artist >ffh - FritzBox<
+wifi::wsSendTuner> Preset 8 , Volume 10
+main::main_displayUpdate 2
+main::displayReset
+myDisplay::clear
+audio::audio_mode> 7: Station 7, Volume 10
+main::main_displayUpdate 2
+wifi::wsSendTuner> Preset 8 , Volume 10
+myDisplay::clear
+myDisplay::Gui3 drawstring PRESET>8<
+myDisplay::Gui3 drawstring NAME  >ffh - FritzBox<
+myDisplay::clear
+ (-83 db) wifi> signal    : 1 = -83 dBm
+NTP-Value Time: 17:13 / Date: 18.10.
+myDisplay::Gui1 drawstring >17:13<
+handleEvent(): pin: 14; eventType: 0; buttonState: 0
+handleEvent> unknown for pin 14 & 0
+handleEvent(): pin: 14; eventType: 2; buttonState: 1
+handleEvent> unknown for pin 14 & 2
+handleEvent(): pin: 14; eventType: 1; buttonState: 1
+handleEvent> preset_up for pin 14
+audio::audio_mode> preset: current 7 -> requested 8
+
+-------------------------------- Staion Select ------------------------------------------
+audio::station_select> requested preset 9 of 8
+audio::station_select> Preset 9 : http://wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3
+audio::station_select> au.radioTitleSeperator -
+audio::station_select> au.radioArtistFirst 1
+audio::station_select> presetNo 9
+audio::station_select> mqtt publish >9<
+
+-------------------------------- Get System Info------------------------------------------
+Heap: Free:158847, Min:156691, Size:354355, Alloc:86016
+audio::station_select> set volume (0)
+audio::station_select> URL >http://wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3<
+audio::station_select> conected<
+audio::station_select> mqtt publish >1Live<
+audio::station_select> mqtt wsSendArtistTitle 1Live /  
+wifi::wsSendArtistTitle> SongTitle >< (len: 0) Artist >1Live<
+wifi::wsSendTuner> Preset 1 , Volume 10
+main::main_displayUpdate 2
+main::displayReset
+myDisplay::clear
+audio::audio_mode> 7: Station 0, Volume 10
+main::main_displayUpdate 2
+wifi::wsSendTuner> Preset 1 , Volume 10
+myDisplay::clear
+myDisplay::Gui3 drawstring PRESET>1<
+myDisplay::Gui3 drawstring NAME  >1Live<
+myDisplay::clear
+ (-83 db) wifi> signal    : 1 = -83 dBm
+NTP-Value Time: 17:13 / Date: 18.10.
+myDisplay::Gui1 drawstring >17:13<
+NTP-loop>  Time: 17:12 / Date: 18.10.

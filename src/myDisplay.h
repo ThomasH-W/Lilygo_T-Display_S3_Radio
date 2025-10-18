@@ -6,7 +6,7 @@
 
 #include "Arduino.h"
 
-#include <User_Setups/Setup25_TTGO_T_Display.h>
+#include <User_Setups/Setup206_LilyGo_T_Display_S3.h> // do we really need to have this include here????
 // #define USER_SETUP_LOADED
 
 #include <TFT_eSPI.h> // Hardware-specific library
