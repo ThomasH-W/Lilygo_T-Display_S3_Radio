@@ -18,13 +18,12 @@
 #error This code is intended to run on the ESP32 platform! Please check your Tools->Board setting.
 #endif
 
+
 #include "FS.h"
 #include "LittleFS.h" //this needs to be first, or it all crashes and burns...
 #define FORMAT_LittleFS_IF_FAILED true
 
-#include <ESPAsyncWiFiManager.h> //https://github.com/tzapu/WiFiManager + https://github.com/alanswx/ESPAsyncWiFiManager
-DNSServer dns;
-// AsyncWiFiManager wifiManager(&webServer, &dns);
+// DNSServer dns;
 
 // #define WEBSERVER_H
 // url will be [ip-address]/update
@@ -188,9 +187,6 @@ void mqtt_callback(String &topic, String &payload)
         audio_mode(AUDIO_STOP);
     if (lastElement.indexOf("Start") >= 0)
         audio_mode(AUDIO_START);
-
-    if (lastElement.indexOf("Voltage") >= 0)
-        showVoltage();
 
 } // end of function
 
@@ -428,9 +424,11 @@ void onWsEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventTyp
 // --------------------------------------------------------------------------
 void handleConfig(AsyncWebServerRequest *request)
 {
+    /*
     Serial.print("DUMMY handleConfig> start wifiManager.startWebPortal()");
-    AsyncWiFiManager wifiManager(&webServer, &dns);
+    AsyncWebServer wifiManager(&webServer, &dns);
     wifiManager.startConfigPortal("OnDemandAP");
+    */
 } // end of function
 
 // --------------------------------------------------------------------------
@@ -602,15 +600,25 @@ void save_wifi_preferences()
 // retrieve last radio station before reboot
 void setup_wifi_preferences()
 {
+    Serial.printf("wifi::setup_wifi_preferences> read nvs\n");
     /* Start a namespace "iotsharing"in Read-Write mode: set second parameter to false Note: Namespace name is limited to 15 chars */
     wifiPreferences.begin("iotsharing", false);
 
     /* get value of key "mqtt_clientID", if key not exist return default value  in second argument Note: Key name is limited to 15 chars too */
 
-    strncpy(config.mqtt_clientID, wifiPreferences.getString("mqtt_clientID", MQTT_CLIENTID).c_str(), sizeof(config.mqtt_clientID));
-    strncpy(config.mqtt_server, wifiPreferences.getString("mqtt_server", MQTT_BROKER).c_str(), sizeof(config.mqtt_server));
-    strncpy(config.mqtt_port, wifiPreferences.getString("mqtt_port", MQTT_PORT).c_str(), sizeof(config.mqtt_port));
-    strncpy(config.mqtt_prefix, wifiPreferences.getString("mqtt_prefix", "house/").c_str(), sizeof(config.mqtt_prefix));
+    if(wifiPreferences.isKey(MQTT_CLIENTID)){
+        strncpy(config.mqtt_clientID, wifiPreferences.getString("mqtt_clientID", MQTT_CLIENTID).c_str(), sizeof(config.mqtt_clientID));
+    }
+    if(wifiPreferences.isKey(MQTT_BROKER)){
+        strncpy(config.mqtt_server, wifiPreferences.getString("mqtt_server", MQTT_BROKER).c_str(), sizeof(config.mqtt_server));
+    }
+    if(wifiPreferences.isKey(MQTT_PORT)){
+        strncpy(config.mqtt_port, wifiPreferences.getString("mqtt_port", MQTT_PORT).c_str(), sizeof(config.mqtt_port));
+    }
+    if(wifiPreferences.isKey("house/")){
+        strncpy(config.mqtt_prefix, wifiPreferences.getString("mqtt_prefix", "house/").c_str(), sizeof(config.mqtt_prefix));
+    }
+
 
     Serial.printf("wifi::setup_wifi_preferences> mqtt_clientID %s\n", config.mqtt_clientID);
     Serial.printf("wifi::setup_wifi_preferences> mqtt_server   %s\n", config.mqtt_server);
@@ -631,91 +639,9 @@ void setup_wifi()
     setup_wifi_preferences();
 
     WiFi.mode(WIFI_STA); // explicitly set mode, esp defaults to STA+AP
-
-    // for testing
-    // wifiManager.resetSettings(); // wipe settings
-
-    AsyncWiFiManager wifiManager(&webServer, &dns);
-
-    //set config save notify callback
-    wifiManager.setSaveConfigCallback(saveConfigCallback);
-
-    AsyncWiFiManagerParameter custom_mqtt_server("server", "mqtt server", config.mqtt_server, sizeof(config.mqtt_server));
-    AsyncWiFiManagerParameter custom_mqtt_port("port", "mqtt port", config.mqtt_port, sizeof(config.mqtt_port));
-    // WiFiManagerParameter custom_mqtt_user("user", "mqtt user", mqtt_user, sizeof(mqtt_user));
-    // WiFiManagerParameter custom_mqtt_password("password", "mqtt password", mqtt_password, sizeof(mqtt_password));
-    AsyncWiFiManagerParameter custom_mqtt_clientID("clientID", "mqtt client ID", config.mqtt_clientID, sizeof(config.mqtt_clientID));
-    AsyncWiFiManagerParameter custom_mqtt_prefix("prefix", "mqtt topic prefix", config.mqtt_prefix, sizeof(config.mqtt_prefix));
-    // config.mqtt_topic_prefix
-
-    //add all your parameters here
-    wifiManager.addParameter(&custom_mqtt_server);
-    wifiManager.addParameter(&custom_mqtt_port);
-    // wifiManager.addParameter(&custom_mqtt_user);
-    // wifiManager.addParameter(&custom_mqtt_password);
-    wifiManager.addParameter(&custom_mqtt_clientID);
-    wifiManager.addParameter(&custom_mqtt_prefix);
-
-    /*
-    // int customFieldLength = 40;
-    // test custom html(radio)
-    const char *custom_radio_str = "<br/><label for='customfieldid'>Custom Field Label</label><input type='radio' name='customfieldid' value='1' checked> One<br><input type='radio' name='customfieldid' value='2'> Two<br><input type='radio' name='customfieldid' value='3'> Three";
-    new (&custom_field) WiFiManagerParameter(custom_radio_str); // custom html input
-    wifiManager.addParameter(&custom_field);
-    wifiManager.setSaveParamsCallback(saveParamCallback);
-    */
-
-    // set dark theme
-    // wifiManager.setClass("invert");
-
-    //set static ip
-    // wifiManager.setSTAStaticIPConfig(IPAddress(192,168,178,254), IPAddress(192,168,178,1), IPAddress(255,255,255,0)); // set static ip,gw,sn
-    // wifiManager.setShowStaticFields(true); // force show static ip fields
-
-    // Automatically connect using saved credentials,
-    // if connection fails, it starts an access point with the specified name ( "AutoConnectAP"),
-    // if empty will auto generate SSID, if password is blank it will be anonymous AP (wifiManager.autoConnect())
-    // then goes into a blocking loop awaiting configuration and will return success result
-
-    wifiManager.setConnectTimeout(5); // in seconds
-    // wifiManager.setConnectRetries(3); // default 1
-
-    bool res;
-    // res = wifiManager.autoConnect(); // auto generated AP name from chipid
-    // res = wifiManager.autoConnect("AutoConnectAP"); // anonymous ap
-    res = wifiManager.autoConnect(WifiAP_SSID, WifiAP_PASS); // password protected ap
-
-    if (!res)
-    {
-        Serial.println("ERR setup_wifi> Failed to connect");
-        // ESP.restart();
-    }
-    else
-    {
-        //if you get here you have connected to the WiFi
-        serial_d_printF("wifi::setup_wifi> connected...yeey :)\n");
-        serial_d_printF("local IP: ");
-        serial_d_println(WiFi.localIP());
-        serial_d_printF("gateway : ");
-        serial_d_println(WiFi.gatewayIP());
-        serial_d_printF("subnet  : ");
-        serial_d_println(WiFi.subnetMask());
-    }
-
-    serial_d_printf("wifi::setup_wifi> mqtt_clientID  : %s (wm custom)\n", custom_mqtt_clientID.getValue());
-    strlcpy(config.mqtt_clientID,            // <- destination
-            custom_mqtt_clientID.getValue(), // <- source
-            sizeof(config.mqtt_clientID));   // <- destination's capacity
-
-    serial_d_printf("wifi::setup_wifi> mqtt_clientID  : %s (config)\n", config.mqtt_clientID);
-
-    //save the custom parameters to FS
-    if (shouldSaveConfig)
-    {
-        serial_d_printF("wifi::setup_wifi> >  saving config\n");
-        save_wifi_preferences();
-        shouldSaveConfig = false;
-    }
+    WiFi.begin(MY_WIFI_SSID, MY_WIFI_PWD);
+    while (WiFi.status() != WL_CONNECTED) delay(1500);
+    Serial.println("setup>> WiFi connected");
 
     mqtt_init();
     setup_webServer();

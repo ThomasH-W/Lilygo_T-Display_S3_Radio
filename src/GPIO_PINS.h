@@ -26,11 +26,11 @@
 #define PIN_ENC0_A 10   // #pin A clk
 #define PIN_ENC0_B 11   // #pin B Data
 #define PIN_ENC0_BTN 12 // #pin SW /-----------------
-#define PIN_ENC0_PWR 23  // #pin SW /-----------------
+#define PIN_ENC0_PWR 13  // #pin SW /-----------------
 
 // pin 34,35,36 + 39 input only
 // Buttons
-#define PIN_BTN_4 17 // preset+
+#define PIN_BTN_4 14 // preset+
 #define PIN_BTN_1 21 // preset+ - onboard button
 #define PIN_BTN_2 16 // mode - onboard button
 #define PIN_BTN_3 3 // mode

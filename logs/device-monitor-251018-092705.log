@@ -1,0 +1,96 @@
+[0;31mE (100928) task_wdt: Task watchdog got triggered. The following tasks/users did not reset the watchdog in time:[0m
+[0;31mE (100928) task_wdt:  - IDLE1 (CPU 1)[0m
+[0;31mE (100928) task_wdt: Tasks currently running:[0m
+[0;31mE (100928) task_wdt: CPU 0: PeriodicTask[0m
+[0;31mE (100928) task_wdt: CPU 1: loopTask[0m
+[0;31mE (100928) task_wdt: Print CPU 1 backtrace[0m
+
+
+Backtrace: 0x40376ABE:0x3FCA1C60 0x4037A0F9:0x3FCA1C80 0x400559DD:0x3FCEC030 0x40380FF2:0x3FCEC040 0x403807A4:0x3FCEC060 0x420CA2B1:0x3FCEC0A0 0x420B8955:0x3FCEC0C0 0x42007A6E:0x3FCEC0E0 0x4208CABB:0x3FCEC120 0x42006101:0x3FCEC140 0x42004663:0x3FCEC160 0x420A2DC4:0x3FCEC180
+  #0  0x40376ABE in esp_crosscore_isr at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/esp_system/crosscore_int.c:74
+  #1  0x3FCA1C60 in _xt_exception_table at ??:?
+  #2  0x4037A0F9 in _xt_lowint1 at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/xtensa/xtensa_vectors.S:1240
+  #3  0x3FCA1C80 in _xt_exception_table at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:67
+  #4  0x40380FF2 in vPortClearInterruptMaskFromISR at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h:560
+      (inlined by) vPortExitCritical at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:514
+  #5  0x403807A4 in xQueueSemaphoreTake at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/freertos/FreeRTOS-Kernel/queue.c:1777
+  #6  0x420CA2B1 in sys_mutex_lock at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/port/freertos/sys_arch.c:63
+      (inlined by) sys_arch_protect at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/port/freertos/sys_arch.c:457
+  #7  0x420B8955 in lwip_ioctl at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/sockets.c:3868
+  #8  0x42007A6E in NetworkClientRxBuffer::r_available() at /Users/thomashoser/.platformio/packages/framework-arduinoespressif32-src-6cb0a29b74dc1d1bc6e83adba584d1d5/libraries/Network/src/NetworkClient.cpp:54
+      (inlined by) NetworkClientRxBuffer::available() at /Users/thomashoser/.platformio/packages/framework-arduinoespressif32-src-6cb0a29b74dc1d1bc6e83adba584d1d5/libraries/Network/src/NetworkClient.cpp:148
+      (inlined by) NetworkClient::available() at /Users/thomashoser/.platformio/packages/framework-arduinoespressif32-src-6cb0a29b74dc1d1bc6e83adba584d1d5/libraries/Network/src/NetworkClient.cpp:538
+  #9  0x4208CABB in MQTTClient::loop() at .pio/libdeps/lilygo-t-display-s3/MQTT/src/MQTTClient.cpp:469
+  #10 0x42006101 in loop_wifi() at src/wifiMgr.cpp:645
+  #11 0x42004663 in loop() at src/main.cpp:308
+  #12 0x420A2DC4 in loopTask(void*) at /Users/thomashoser/.platformio/packages/framework-arduinoespressif32-src-6cb0a29b74dc1d1bc6e83adba584d1d5/cores/esp32/main.cpp:82
+
+
+[0;31mE (105928) task_wdt: Task watchdog got triggered. The following tasks/users did not reset the watchdog in time:[0m
+[0;31mE (105928) task_wdt:  - IDLE1 (CPU 1)[0m
+[0;31mE (105928) task_wdt: Tasks currently running:[0m
+[0;31mE (105928) task_wdt: CPU 0: PeriodicTask[0m
+[0;31mE (105928) task_wdt: CPU 1: loopTask[0m
+[0;31mE (105928) task_wdt: Print CPU 1 backtrace[0m
+
+
+Backtrace: 0x40376ABE:0x3FCA1C60 0x4037A0F9:0x3FCA1C80 0x400559DD:0x3FCEBE60 0x40380FF2:0x3FCEBE70 0x4038035D:0x3FCEBE90 0x420CA2C9:0x3FCEBED0 0x420CB3DB:0x3FCEBEF0 0x420CB4C9:0x3FCEBF20 0x420CB84F:0x3FCEBF90 0x420B6996:0x3FCEBFB0 0x420B7F9B:0x3FCEBFF0 0x420B8086:0x3FCEC050 0x420078DD:0x3FCEC070 0x4202AD62:0x3FCEC0C0 0x4202D01B:0x3FCEC0F0 0x4200412A:0x3FCEC130 0x42004669:0x3FCEC160 0x420A2DC4:0x3FCEC180
+  #0  0x40376ABE in esp_crosscore_isr at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/esp_system/crosscore_int.c:74
+  #1  0x3FCA1C60 in _xt_exception_table at ??:?
+  #2  0x4037A0F9 in _xt_lowint1 at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/xtensa/xtensa_vectors.S:1240
+  #3  0x3FCA1C80 in _xt_exception_table at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:67
+  #4  0x40380FF2 in vPortClearInterruptMaskFromISR at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h:560
+      (inlined by) vPortExitCritical at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:514
+  #5  0x4038035D in xQueueGenericSend at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/freertos/FreeRTOS-Kernel/queue.c:1056
+  #6  0x420CA2C9 in sys_mutex_unlock at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/port/freertos/sys_arch.c:77
+      (inlined by) sys_arch_unprotect at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/port/freertos/sys_arch.c:470
+  #7  0x420CB3DB in netconn_recv_data at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/api_lib.c:605 (discriminator 1)
+  #8  0x420CB4C9 in netconn_recv_data_tcp at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/api_lib.c:730
+  #9  0x420CB84F in netconn_recv_tcp_pbuf_flags at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/api_lib.c:811
+  #10 0x420B6996 in lwip_recv_tcp at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/sockets.c:990
+  #11 0x420B7F9B in lwip_recvfrom at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/sockets.c:1257
+  #12 0x420B8086 in lwip_recv at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/sockets.c:1322
+  #13 0x420078DD in NetworkClient::connected() at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/include/lwip/sockets.h:60
+      (inlined by) NetworkClient::connected() at /Users/thomashoser/.platformio/packages/framework-arduinoespressif32-src-6cb0a29b74dc1d1bc6e83adba584d1d5/libraries/Network/src/NetworkClient.cpp:558
+  #14 0x4202AD62 in Audio::processWebStream() at .pio/libdeps/lilygo-t-display-s3/ESP32-audioI2S/src/Audio.cpp:3897
+  #15 0x4202D01B in Audio::loop() at .pio/libdeps/lilygo-t-display-s3/ESP32-audioI2S/src/Audio.cpp:3243 (discriminator 1)
+  #16 0x4200412A in loop_audio() at src/audio.cpp:770
+  #17 0x42004669 in loop() at src/main.cpp:310
+  #18 0x420A2DC4 in loopTask(void*) at /Users/thomashoser/.platformio/packages/framework-arduinoespressif32-src-6cb0a29b74dc1d1bc6e83adba584d1d5/cores/esp32/main.cpp:82
+
+
+[0;31mE (110928) task_wdt: Task watchdog got triggered. The following tasks/users did not reset the watchdog in time:[0m
+[0;31mE (110928) task_wdt:  - IDLE1 (CPU 1)[0m
+[0;31mE (110928) task_wdt: Tasks currently running:[0m
+[0;31mE (110928) task_wdt: CPU 0: IDLE0[0m
+[0;31mE (110928) task_wdt: CPU 1: loopTask[0m
+[0;31mE (110928) task_wdt: Print CPU 1 backtrace[0m
+
+
+Backtrace: 0x40376ABE:0x3FCA1C60 0x4037A0F9:0x3FCA1C80 0x400559DD:0x3FCEBE60 0x40380FF2:0x3FCEBE70 0x4038035D:0x3FCEBE90 0x420CA2C9:0x3FCEBED0 0x420CB3E9:0x3FCEBEF0 0x420CB4C9:0x3FCEBF20 0x420CB84F:0x3FCEBF90 0x420B6996:0x3FCEBFB0 0x420B7F9B:0x3FCEBFF0 0x420B8086:0x3FCEC050 0x420078DD:0x3FCEC070 0x4202AD62:0x3FCEC0C0 0x4202D01B:0x3FCEC0F0 0x4200412A:0x3FCEC130 0x42004669:0x3FCEC160 0x420A2DC4:0x3FCEC180
+  #0  0x40376ABE in esp_crosscore_isr at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/esp_system/crosscore_int.c:74
+  #1  0x3FCA1C60 in _xt_exception_table at ??:?
+  #2  0x4037A0F9 in _xt_lowint1 at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/xtensa/xtensa_vectors.S:1240
+  #3  0x3FCA1C80 in _xt_exception_table at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:67
+  #4  0x40380FF2 in vPortClearInterruptMaskFromISR at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/freertos/FreeRTOS-Kernel/portable/xtensa/include/freertos/portmacro.h:560
+      (inlined by) vPortExitCritical at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/freertos/FreeRTOS-Kernel/portable/xtensa/port.c:514
+  #5  0x4038035D in xQueueGenericSend at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/freertos/FreeRTOS-Kernel/queue.c:1056
+  #6  0x420CA2C9 in sys_mutex_unlock at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/port/freertos/sys_arch.c:77
+      (inlined by) sys_arch_unprotect at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/port/freertos/sys_arch.c:470
+  #7  0x420CB3E9 in netconn_err at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/api_lib.c:1152
+      (inlined by) netconn_err at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/api_lib.c:1142
+      (inlined by) netconn_recv_data at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/api_lib.c:606
+  #8  0x420CB4C9 in netconn_recv_data_tcp at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/api_lib.c:730
+  #9  0x420CB84F in netconn_recv_tcp_pbuf_flags at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/api_lib.c:811
+  #10 0x420B6996 in lwip_recv_tcp at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/sockets.c:990
+  #11 0x420B7F9B in lwip_recvfrom at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/sockets.c:1257
+  #12 0x420B8086 in lwip_recv at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/lwip/src/api/sockets.c:1322
+  #13 0x420078DD in NetworkClient::connected() at /Users/thomashoser/.platformio/packages/framework-espidf@src-e55492bf35ec58abb1d0380572a1aa2a/components/lwip/include/lwip/sockets.h:60
+      (inlined by) NetworkClient::connected() at /Users/thomashoser/.platformio/packages/framework-arduinoespressif32-src-6cb0a29b74dc1d1bc6e83adba584d1d5/libraries/Network/src/NetworkClient.cpp:558
+  #14 0x4202AD62 in Audio::processWebStream() at .pio/libdeps/lilygo-t-display-s3/ESP32-audioI2S/src/Audio.cpp:3897
+  #15 0x4202D01B in Audio::loop() at .pio/libdeps/lilygo-t-display-s3/ESP32-audioI2S/src/Audio.cpp:3243 (discriminator 1)
+  #16 0x4200412A in loop_audio() at src/audio.cpp:770
+  #17 0x42004669 in loop() at src/main.cpp:310
+  #18 0x420A2DC4 in loopTask(void*) at /Users/thomashoser/.platformio/packages/framework-arduinoespressif32-src-6cb0a29b74dc1d1bc6e83adba584d1d5/cores/esp32/main.cpp:82
+
+

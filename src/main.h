@@ -4,7 +4,7 @@
 #ifndef MAIN_h
 #define MAIN_h
 
-#define FIRMWARE_VERSION "1.2.4"
+#define FIRMWARE_VERSION "2.0.0"
 
 #include "Arduino.h"
 #include "FS.h"

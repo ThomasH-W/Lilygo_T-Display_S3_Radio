@@ -12,14 +12,14 @@
 
 #include <Arduino.h>
 
-int a=3, b=5;
-int min_result = min (a,b) ;
+#include <esp_task_wdt.h>
+#define WDT_TIMEOUT 3 // set WDT timeout period in seconds
+esp_err_t ESP32_ERROR;
 
-// Wrapper for Serial.print
-#define DEBUG true
-#include "_SerialPrintf.h"
+#define DEBUG true          // enable additional serial printf
+#include "_SerialPrintf.h"  // Wrapper for Serial.print
 #include "_GPIO.h"
-
+  
 #if !(defined(ESP32))
 #error This code is intended to run on the ESP8266 or ESP32 platform! Please check your Tools->Board setting.
 #endif
@@ -252,23 +252,41 @@ void displayLoop(void)
 
 } // end of function
 
+void watchdog_setup() {
+  Serial.println("Configuring WDT...");
+  Serial.print("Watchdog Timeout (in seconds) set to : ");
+  Serial.println(WDT_TIMEOUT);
+  esp_task_wdt_deinit();
+  // Task Watchdog configuration
+  esp_task_wdt_config_t wdt_config = {
+    .timeout_ms = WDT_TIMEOUT * 1000,                 // Convertin ms
+    .idle_core_mask = (1 << portNUM_PROCESSORS) - 1,  // Bitmask of all cores, https://github.com/espressif/esp-idf/blob/v5.2.2/examples/system/task_watchdog/main/task_watchdog_example_main.c
+    .trigger_panic = true                             // Enable panic to restart ESP32
+  };
+  // WDT Init
+  ESP32_ERROR = esp_task_wdt_init(&wdt_config);
+   Serial.println("Last Reset : " + String(esp_err_to_name(ESP32_ERROR)));
+   esp_task_wdt_add(NULL);  //add current thread to WDT watch
+}
+
 // --------------------------------------------------------------------------
 void setup()
 {
-  serial_begin(115200);
-  while (!Serial)
-    ;
+  Serial.begin(MONITOR_SPEED);
+  while (!Serial);// auf serielle Verbindung warten
   delay(500);
-  serial_println("-------------------------------------------------------- wifi init th");
+  serial_println("-------------------------------------------------------- setup");
+
+  //#define TFT_BL 38
+  pinMode( TFT_BL, OUTPUT); // fix runtime: __digitalWrite(): IO 38 is not set as GPIO. Execute digitalMode(38, OUTPUT) first
+
+  // watchdog_setup();
 
   myDisplay1.begin(); // start display
-  delay(1000);
   myDisplay1.println("> Boot TTGO-Radio ...");
 
-  delay(1000);
-  setup_button();
-  delay(1000);
   setup_gpio_pins(); // get default gpio pins
+  setup_button();
 
   delay(1000);
   myDisplay1.print("> Firmware ");
@@ -284,7 +302,6 @@ void setup()
       ; // loop forever
   }
 
-  readVoltage(); // must be done before wifi is established - conflict using ADC
   // myDisplay1.Gui0(); test gui using differrent fonts, files to be loaded into SPIFFS
 
   myDisplay1.println("> setup WiFi ...");
@@ -306,6 +323,22 @@ void setup()
   mode = ST_GUI_1; // switch to default GUI 7 main screen
 } // end of function
 
+
+int i = 0;
+int last = millis();
+void watchdog_loop() {
+  // resetting WDT every 2s, 5 times only
+  if (millis() - last >= 2000 && i < 5) {
+      Serial.println("Resetting WDT...");
+      esp_task_wdt_reset();
+      last = millis();
+      i++;
+      if (i == 5) {
+        Serial.println("Stopping WDT reset. CPU should reboot in 3s");
+      }
+  }
+}
+
 // --------------------------------------------------------------------------
 void loop()
 {
@@ -320,5 +353,6 @@ void loop()
   button4.check();
 
   displayLoop();
+  // watchdog_loop();
   yield();
 } // end of function

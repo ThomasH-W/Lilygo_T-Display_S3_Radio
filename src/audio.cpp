@@ -313,7 +313,6 @@ void station_select(int stationID)
         mqtt_pub_tele("Volume", buf);
     } // check url
 
-    showVoltage();
     main_displayUpdate(true);
 } // end of function
 
@@ -490,14 +489,14 @@ void setup_show_data()
 
 void setup_gpio_pins()
 {
-    setupGPIO.P_I2S_LRCK = PIN_I2S_LRCK;
+    setupGPIO.P_I2S_LRCK = PIN_I2S_LRCK;    // pinMode( PIN_I2S_LRCK, OUTPUT); 
     setupGPIO.P_I2S_BCLK = PIN_I2S_BCLK;
     setupGPIO.P_I2S_DATA = PIN_I2S_DATA;
 
-    setupGPIO.P_ENC0_A = PIN_ENC0_A;
-    setupGPIO.P_ENC0_B = PIN_ENC0_B;
-    setupGPIO.P_ENC0_BTN = PIN_ENC0_BTN;
-    setupGPIO.P_ENC0_PWR = PIN_ENC0_PWR;
+    setupGPIO.P_ENC0_A = PIN_ENC0_A;        pinMode( PIN_ENC0_A, OUTPUT); 
+    setupGPIO.P_ENC0_B = PIN_ENC0_B;        pinMode( PIN_ENC0_B, OUTPUT); 
+    setupGPIO.P_ENC0_BTN = PIN_ENC0_BTN;    pinMode( PIN_ENC0_BTN, OUTPUT); 
+    setupGPIO.P_ENC0_PWR = PIN_ENC0_PWR;    pinMode( PIN_ENC0_PWR, OUTPUT); 
 
     // setupGPIO.P_ADC_BAT = PIN_ADC_BAT;
     // setupGPIO.P_ADC_EN = PIN_ADC_EN;
@@ -711,27 +710,6 @@ bool setup_read_file()
     serial_d_printf("setup_read_file> %s processed\n", setupFileName2);
     setup_show_data();
     return true; // WiFiManager INI -Datei erfolgreih gelesen
-} // end of function
-
-//-------------------------------------------------------------------------------------------------------------------------------------------
-// analog read of voltage
-// Note: does only work if wifi is not active
-void readVoltage()
-{
-    int vref = 1100;
-    uint16_t v = analogRead(setupGPIO.P_ADC_EN);
-    battery_voltage = ((float)v / 4095.0) * 2.0 * 3.3 * (vref / 1000.0);
-    serial_d_printf("readVoltage> Voltage %2f\n", battery_voltage);
-} // end of function
-
-//-------------------------------------------------------------------------------------------------------------------------------------------
-// print and publish curretn voltage
-void showVoltage()
-{
-    char buf[10];
-    serial_d_printf("showVoltage> Voltage %2f\n", battery_voltage);
-    sprintf(buf, "%2f", battery_voltage);
-    mqtt_pub_tele("Voltage", buf);
 } // end of function
 
 //-------------------------------------------------------------------------------------------------------------------------------------------
