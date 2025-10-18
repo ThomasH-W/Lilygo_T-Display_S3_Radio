@@ -1,0 +1,198 @@
+-------------------------------------------------------- setup
+Display> begin() ... Screen size 320 * 170 complete
+Listing directory: /
+  FILE: fallbackCover.jpg  SIZE: 14385  LAST WRITE: 2025-10-13 13:43:36
+  FILE: favicon.ico  SIZE: 1150  LAST WRITE: 2025-10-13 13:43:36
+  FILE: index.html  SIZE: 1640  LAST WRITE: 2025-10-13 13:43:36
+  FILE: main.js  SIZE: 12701  LAST WRITE: 2025-10-13 13:43:36
+  FILE: radio.html  SIZE: 1029  LAST WRITE: 2025-10-13 13:43:36
+  FILE: radio.js  SIZE: 3955  LAST WRITE: 2025-10-13 13:43:36
+  FILE: setup.ini  SIZE: 1672  LAST WRITE: 2025-10-13 13:43:36
+  FILE: style.css  SIZE: 7361  LAST WRITE: 2025-10-13 13:43:36
+setup_read_file> reading /setup.ini
+[4]> RadioName = 1Live
+[5]> RadioURL = http://wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3
+[6]> RadioTitleSeperator = -
+[7]> RadioTitleFirst = Artist
+[9]> RadioName = WDR2
+[10]> RadioURL = https://wdr-edge-301b-dus-ts-cdn.cast.addradio.de/wdr/wdr2/rheinland/mp3/128/stream.mp3
+[12]> RadioName = SWR3
+[13]> RadioURL = http://mp3-live.swr3.de/swr3_m.m3u
+[14]> RadioTitleSeperator = /
+[15]> RadioTitleFirst = Song
+[17]> RadioName = bigFM
+[18]> RadioURL = http://streams.bigfm.de/hmr-128-mp3
+[19]> RadioTitleSeperator = -
+[20]> RadioTitleFirst = Artist
+[22]> RadioName = ffn
+[23]> RadioURL = http://player.ffn.de/ffn.mp3
+[24]> RadioTitleSeperator = -
+[25]> RadioTitleFirst = Artist
+[27]> RadioName = 1Live - Neu fuer den Sektor
+[28]> RadioURL = http://wdr-1live-neufuerdensektor.icecast.wdr.de/wdr/1live/neufuerdensektor/mp3/128/stream.mp3
+[29]> RadioTitleSeperator = -
+[30]> RadioTitleFirst = Artist
+[32]> RadioName = 1live - FritzBox
+[33]> RadioURL = http://192.168.178.1:49200/ST/AUDIO/DLNA-1-0/wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3
+[34]> RadioTitleSeperator = -
+[35]> RadioTitleFirst = Artist
+[37]> RadioName = ffh - FritzBox
+[38]> RadioURL = http://192.168.178.1:49200/ST/AUDIO/DLNA-1-0/mp3.ffh.de/radioffh/hqlivestream.mp3
+[39]> RadioTitleSeperator = -
+[40]> RadioTitleFirst = Artist
+setup_read_file> /setup.ini processed
+P_I2S_LRCK 43
+P_I2S_BCLK 44
+P_I2S_DATA 18
+P_ENC0_A 10
+P_ENC0_B 11
+P_ENC0_BTN 12
+P_ENC0_PWR 13
+P_ADC_BAT 255
+P_ADC_BAT 255
+Volume 0
+Radio 0: 1Live - http://wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3
+Radio 1: WDR2 - https://wdr-edge-301b-dus-ts-cdn.cast.addradio.de/wdr/wdr2/rheinland/mp3/128/stream.mp3
+Radio 2: SWR3 - http://mp3-live.swr3.de/swr3_m.m3u
+Radio 3: bigFM - http://streams.bigfm.de/hmr-128-mp3
+wifi::setup_wifi> default clientID: ESP32_1606964
+wifi::setup_wifi_preferences> read nvs
+wifi::setup_wifi_preferences> mqtt_clientID ESP32_1606964
+wifi::setup_wifi_preferences> mqtt_server   192.168.178.20
+wifi::setup_wifi_preferences> mqtt_port     1883
+wifi::setup_wifi_preferences> mqtt_prefix   house/
+setup>> WiFi connected
+wifi::mqtt_set_topics
+tele> house/tele/ESP32_1606964
+stat> house/stat/ESP32_1606964
+cmnd> house/cmnd/ESP32_1606964
+subscribe> house/cmnd/ESP32_1606964/#
+wifi::mqtt_init> > MQTT: mqtt.begin
+MQTT: connected
+setup_webServer> Inizializing FS...[0;33m[  3833][W][LittleFS.cpp:58] begin(): LittleFS Already Mounted![0m
+done.
+HTTP server started
+
+-------------------------------- Get System Info------------------------------------------
+Heap: Free:161567, Min:161467, Size:354355, Alloc:86016
+wifi> WiFi SSID: A-Team
+wifi> IP address: 192.168.178.151
+ (-79 db) wifi> signal    : 2 = -79 dBm
+NTP> Saturday, October 18 2025 17:11:52
+18.10.2025 17:11:52
+audio::setup_preferences> Preset 4
+audio::setup_preferences> Volume 10
+audio::setup_preferences> Number of restart times: 14
+setup_audio> begin
+
+-------------------------------- Staion Select ------------------------------------------
+audio::station_select> requested preset 5 of 8
+audio::station_select> Preset 5 : http://player.ffn.de/ffn.mp3
+audio::station_select> au.radioTitleSeperator -
+audio::station_select> au.radioArtistFirst 1
+audio::station_select> presetNo 5
+audio::station_select> mqtt publish >5<
+
+-------------------------------- Get System Info------------------------------------------
+Heap: Free:161467, Min:161231, Size:354355, Alloc:86016
+audio::station_select> set volume (0)
+audio::station_select> URL >http://player.ffn.de/ffn.mp3<
+audio::station_select> conected<
+audio::station_select> mqtt publish >ffn<
+audio::station_select> mqtt wsSendArtistTitle ffn /  
+wifi::wsSendArtistTitle> SongTitle >< (len: 0) Artist >ffn<
+wifi::wsSendTuner> Preset 5 , Volume 10
+main::main_displayUpdate
+main::displayReset
+myDisplay::clear
+listDir::Listing directory> /
+  FILE: fallbackCover.jpg  SIZE: 14385  LAST WRITE: 2025-10-13 15:43:36
+  FILE: favicon.ico  SIZE: 1150  LAST WRITE: 2025-10-13 15:43:36
+  FILE: index.html  SIZE: 1640  LAST WRITE: 2025-10-13 15:43:36
+  FILE: main.js  SIZE: 12701  LAST WRITE: 2025-10-13 15:43:36
+  FILE: radio.html  SIZE: 1029  LAST WRITE: 2025-10-13 15:43:36
+  FILE: radio.js  SIZE: 3955  LAST WRITE: 2025-10-13 15:43:36
+  FILE: setup.ini  SIZE: 1672  LAST WRITE: 2025-10-13 15:43:36
+  FILE: style.css  SIZE: 7361  LAST WRITE: 2025-10-13 15:43:36
+rotary::setup_rotary> done
+myDisplay::clear
+ (-79 db) wifi> signal    : 2 = -79 dBm
+NTP-Value Time: 17:11 / Date: 18.10.
+myDisplay::Gui1 drawstring >17:11<
+handleEvent(): pin: 14; eventType: 0; buttonState: 0
+handleEvent> unknown for pin 14 & 0
+handleEvent(): pin: 14; eventType: 2; buttonState: 1
+handleEvent> unknown for pin 14 & 2
+handleEvent(): pin: 14; eventType: 1; buttonState: 1
+handleEvent> preset_up for pin 14
+audio::audio_mode> preset: current 4 -> requested 5
+
+-------------------------------- Staion Select ------------------------------------------
+audio::station_select> requested preset 6 of 8
+audio::station_select> Preset 6 : http://wdr-1live-neufuerdensektor.icecast.wdr.de/wdr/1live/neufuerdensektor/mp3/128/stream.mp3
+audio::station_select> au.radioTitleSeperator -
+audio::station_select> au.radioArtistFirst 1
+audio::station_select> presetNo 6
+audio::station_select> mqtt publish >6<
+
+-------------------------------- Get System Info------------------------------------------
+Heap: Free:158859, Min:157671, Size:354355, Alloc:86016
+audio::station_select> set volume (0)
+audio::station_select> URL >http://wdr-1live-neufuerdensektor.icecast.wdr.de/wdr/1live/neufuerdensektor/mp3/128/stream.mp3<
+audio::station_select> conected<
+audio::station_select> mqtt publish >1Live - Neu fuer de<
+audio::station_select> mqtt wsSendArtistTitle 1Live - Neu fuer de /  
+wifi::wsSendArtistTitle> SongTitle >< (len: 0) Artist >1Live - Neu fuer de<
+wifi::wsSendTuner> Preset 6 , Volume 10
+main::main_displayUpdate 2
+main::displayReset
+myDisplay::clear
+audio::audio_mode> 7: Station 5, Volume 10
+main::main_displayUpdate 2
+wifi::wsSendTuner> Preset 6 , Volume 10
+myDisplay::clear
+myDisplay::Gui3 drawstring PRESET>6<
+myDisplay::Gui3 drawstring NAME  >1Live - Neu fuer de<
+myDisplay::clear
+ (-81 db) wifi> signal    : 1 = -81 dBm
+NTP-Value Time: 17:12 / Date: 18.10.
+myDisplay::Gui1 drawstring >17:12<
+handleEvent(): pin: 14; eventType: 0; buttonState: 0
+handleEvent> unknown for pin 14 & 0
+handleEvent(): pin: 14; eventType: 2; buttonState: 1
+handleEvent> unknown for pin 14 & 2
+handleEvent(): pin: 14; eventType: 1; buttonState: 1
+handleEvent> preset_up for pin 14
+audio::audio_mode> preset: current 5 -> requested 6
+
+-------------------------------- Staion Select ------------------------------------------
+audio::station_select> requested preset 7 of 8
+audio::station_select> Preset 7 : http://192.168.178.1:49200/ST/AUDIO/DLNA-1-0/wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3
+audio::station_select> au.radioTitleSeperator -
+audio::station_select> au.radioArtistFirst 1
+audio::station_select> presetNo 7
+audio::station_select> mqtt publish >7<
+
+-------------------------------- Get System Info------------------------------------------
+Heap: Free:158623, Min:157671, Size:354355, Alloc:86016
+audio::station_select> set volume (0)
+audio::station_select> URL >http://192.168.178.1:49200/ST/AUDIO/DLNA-1-0/wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3<
+audio::station_select> conected<
+audio::station_select> mqtt publish >1live - FritzBox<
+audio::station_select> mqtt wsSendArtistTitle 1live - FritzBox /  
+wifi::wsSendArtistTitle> SongTitle >< (len: 0) Artist >1live - FritzBox<
+wifi::wsSendTuner> Preset 7 , Volume 10
+main::main_displayUpdate 2
+main::displayReset
+myDisplay::clear
+audio::audio_mode> 7: Station 6, Volume 10
+main::main_displayUpdate 2
+wifi::wsSendTuner> Preset 7 , Volume 10
+myDisplay::clear
+myDisplay::Gui3 drawstring PRESET>7<
+myDisplay::Gui3 drawstring NAME  >1live - FritzBox<
+myDisplay::clear
+ (-82 db) wifi> signal    : 1 = -82 dBm
+NTP-Value Time: 17:12 / Date: 18.10.
+myDisplay::Gui1 drawstring >17:12<
+NTP-loop>  Time:  / Date: 18.10.

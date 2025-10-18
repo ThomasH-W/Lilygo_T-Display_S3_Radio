@@ -1,7 +1,7 @@
 #ifndef _CONFIG_H
 #define _CONFIG_H
 
-#define WIFI_SETUP_FILE "/setup.ini"
+#define WIFI_SETUP_FILE "/setup.ini";
 
 #include "user_config_override.h"
 
@@ -10,7 +10,7 @@
 #define WIFI_AP_PASS "password"
 //#define WIFI_CONFIG_FILE "/config.json"
 
-#define MQTT_CLIENTID "ESP32_Radio_6666"
+#define MQTT_CLIENTID "ESP32_Radio_1234"
 #define MQTT_BROKER "192.168.178.20"
 #define MQTT_PORT "1883"
 

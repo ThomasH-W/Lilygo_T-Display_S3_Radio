@@ -18,6 +18,8 @@
 #error This code is intended to run on the ESP32 platform! Please check your Tools->Board setting.
 #endif
 
+#include "config.h"
+const char *setupFileName = WIFI_SETUP_FILE;
 
 #include "FS.h"
 #include "LittleFS.h" //this needs to be first, or it all crashes and burns...
@@ -61,7 +63,7 @@ MQTTClient mqtt;
 //#include "INI_Setup_html.h"
 //#include <WebServer.h>
 //WebServer webServer(80);
-const char *setupFileName = WIFI_SETUP_FILE;
+// const char *setupFileName = WIFI_SETUP_FILE;
 
 const char *WifiAP_SSID = WIFI_AP_SSID;
 const char *WifiAP_PASS = WIFI_AP_PASS;
@@ -269,7 +271,7 @@ bool loadFromSPIFFS(AsyncWebServerRequest *request, String path)
 } // end of function
 
 // --------------------------------------------------------------------------
-bool saveToSPIFFS(char *path, const String data)
+bool saveToSPIFFS(const char *path, const String data)
 {
     Serial.printf("saveToSPIFFS> write to file %s ", path);
 
@@ -438,6 +440,8 @@ void handleRadioConfig(AsyncWebServerRequest *request)
 {
     // int params = request->params();
     int params = request->params();
+    Serial.printf("wifiMgr::handleRadioConfig %d params requested\n", params);
+
     int i=0;
     const AsyncWebParameter* p = request->getParam(i); // get first parameter
     if (p->isPost())
@@ -446,7 +450,7 @@ void handleRadioConfig(AsyncWebServerRequest *request)
         Serial.printf("_POST[%s]\n", p->name().c_str());
         if (request->hasParam("config", true))
             Serial.printf("_POST[%s] is config\n", p->name().c_str());
-        saveToSPIFFS(WIFI_SETUP_FILE, p->value());
+        saveToSPIFFS(setupFileName, p->value());
     }
     else
     {
@@ -653,6 +657,8 @@ void setup_wifi()
 void loop_wifi()
 {
     mqtt.loop();
+    yield();
+    taskYIELD();
 } // end of function
 
 // unsigned char specials[] = "$&+,/:;=?@ <>#%{}|\^~[]`"; /* String containing chars you want encoded */

@@ -15,6 +15,7 @@ lib_deps =
 #include "_SerialPrintf.h"
 #include "config.h"
 const char *setupFileName2 = WIFI_SETUP_FILE;
+
 #include "wifiMgr.h"
 
 #include "Preferences.h"
@@ -691,13 +692,13 @@ bool setup_read_file()
         serial_d_print(" not found\n");
         return false; // setup file missing
         /*
-        serial_d_printf("setup_read_file> %s not found, create one\n", setupFileName2);
-        File DataFile = LittleFS.open(setupFileName2, "w"); // wenn nicht dann Anlegen
+        serial_d_printf("setup_read_file> %s not found, create one\n", setupFileName22);
+        File DataFile = LittleFS.open(setupFileName22, "w"); // wenn nicht dann Anlegen
         DataFile.println("#INI neu angelegt bitte editieren");
         DataFile.close();
         */
     }
-    // LittleFS.open(setupFileName, "r");
+    // LittleFS.open(setupFileName2, "r");
     inifile = LittleFS.open(setupFileName2, "r"); // WiFiManager INI-Datei offnen
     serial_d_printf("setup_read_file> reading %s\n", setupFileName2);
     int i = 0;
@@ -795,8 +796,9 @@ void loop_audio()
 
     if (currentMillisAudioLoop - previousTitleUpdateMillis > intervalTitleUpdatePanic)
     { // after Title has not been updated for some time, assume that connection broken down
-      // Serial.printf("audio::loop_audio> Title update timeout exceeded %d min\n", intervalTitleUpdatePanic / 1000 /60);
+      Serial.printf("audio::loop_audio> Title update timeout exceeded %d min\n", intervalTitleUpdatePanic / 1000 /60);
       // ESP.restart();
     }
-
+    yield();
+    vTaskDelay(1);
 } // end of function

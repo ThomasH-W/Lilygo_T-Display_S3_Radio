@@ -12,10 +12,6 @@
 
 #include <Arduino.h>
 
-#include <esp_task_wdt.h>
-#define WDT_TIMEOUT 3 // set WDT timeout period in seconds
-esp_err_t ESP32_ERROR;
-
 #define DEBUG true          // enable additional serial printf
 #include "_SerialPrintf.h"  // Wrapper for Serial.print
 #include "_GPIO.h"
@@ -249,25 +245,9 @@ void displayLoop(void)
     previousMillisDisplay = millis();
     displayUpdate = false;
   }
-
+    yield();
+    taskYIELD();
 } // end of function
-
-void watchdog_setup() {
-  Serial.println("Configuring WDT...");
-  Serial.print("Watchdog Timeout (in seconds) set to : ");
-  Serial.println(WDT_TIMEOUT);
-  esp_task_wdt_deinit();
-  // Task Watchdog configuration
-  esp_task_wdt_config_t wdt_config = {
-    .timeout_ms = WDT_TIMEOUT * 1000,                 // Convertin ms
-    .idle_core_mask = (1 << portNUM_PROCESSORS) - 1,  // Bitmask of all cores, https://github.com/espressif/esp-idf/blob/v5.2.2/examples/system/task_watchdog/main/task_watchdog_example_main.c
-    .trigger_panic = true                             // Enable panic to restart ESP32
-  };
-  // WDT Init
-  ESP32_ERROR = esp_task_wdt_init(&wdt_config);
-   Serial.println("Last Reset : " + String(esp_err_to_name(ESP32_ERROR)));
-   esp_task_wdt_add(NULL);  //add current thread to WDT watch
-}
 
 // --------------------------------------------------------------------------
 void setup()
@@ -279,8 +259,6 @@ void setup()
 
   //#define TFT_BL 38
   pinMode( TFT_BL, OUTPUT); // fix runtime: __digitalWrite(): IO 38 is not set as GPIO. Execute digitalMode(38, OUTPUT) first
-
-  // watchdog_setup();
 
   myDisplay1.begin(); // start display
   myDisplay1.println("> Boot TTGO-Radio ...");
@@ -295,8 +273,8 @@ void setup()
   bool func_success = setup_read_file(); // read config file setup.ini from littleFS and pass every line to parser
   if (func_success == false)
   {
-    myDisplay1.println("> PANIC: setup.ini not found");
-    myDisplay1.println("> Build and upload filesystem");
+    myDisplay1.println("> PANIC: setup.ini not found in SIPFFS!");
+    myDisplay1.println("> Build and upload filesystem in platformIO");
     myDisplay1.println("> System halted");
     while (true)
       ; // loop forever
@@ -324,25 +302,10 @@ void setup()
 } // end of function
 
 
-int i = 0;
-int last = millis();
-void watchdog_loop() {
-  // resetting WDT every 2s, 5 times only
-  if (millis() - last >= 2000 && i < 5) {
-      Serial.println("Resetting WDT...");
-      esp_task_wdt_reset();
-      last = millis();
-      i++;
-      if (i == 5) {
-        Serial.println("Stopping WDT reset. CPU should reboot in 3s");
-      }
-  }
-}
-
 // --------------------------------------------------------------------------
 void loop()
 {
-  loop_wifi();
+  loop_wifi(); // update mqtt
   loop_rotary();
   loop_audio();
   myNtp.loop();
@@ -353,6 +316,7 @@ void loop()
   button4.check();
 
   displayLoop();
-  // watchdog_loop();
+  
   yield();
+  taskYIELD();
 } // end of function

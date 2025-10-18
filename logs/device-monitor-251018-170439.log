@@ -1,0 +1,274 @@
+-------------------------------------------------------- setup
+Display> begin() ... Screen size 320 * 170 complete
+Listing directory: /
+  FILE: fallbackCover.jpg  SIZE: 14385  LAST WRITE: 2025-10-13 13:43:36
+  FILE: favicon.ico  SIZE: 1150  LAST WRITE: 2025-10-13 13:43:36
+  FILE: index.html  SIZE: 1640  LAST WRITE: 2025-10-13 13:43:36
+  FILE: main.js  SIZE: 12701  LAST WRITE: 2025-10-13 13:43:36
+  FILE: radio.html  SIZE: 1029  LAST WRITE: 2025-10-13 13:43:36
+  FILE: radio.js  SIZE: 3955  LAST WRITE: 2025-10-13 13:43:36
+  FILE: setup.ini  SIZE: 1672  LAST WRITE: 2025-10-13 13:43:36
+  FILE: style.css  SIZE: 7361  LAST WRITE: 2025-10-13 13:43:36
+setup_read_file> reading /setup.ini
+[4]> RadioName = 1Live
+[5]> RadioURL = http://wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3
+[6]> RadioTitleSeperator = -
+[7]> RadioTitleFirst = Artist
+[9]> RadioName = WDR2
+[10]> RadioURL = https://wdr-edge-301b-dus-ts-cdn.cast.addradio.de/wdr/wdr2/rheinland/mp3/128/stream.mp3
+[12]> RadioName = SWR3
+[13]> RadioURL = http://mp3-live.swr3.de/swr3_m.m3u
+[14]> RadioTitleSeperator = /
+[15]> RadioTitleFirst = Song
+[17]> RadioName = bigFM
+[18]> RadioURL = http://streams.bigfm.de/hmr-128-mp3
+[19]> RadioTitleSeperator = -
+[20]> RadioTitleFirst = Artist
+[22]> RadioName = ffn
+[23]> RadioURL = http://player.ffn.de/ffn.mp3
+[24]> RadioTitleSeperator = -
+[25]> RadioTitleFirst = Artist
+[27]> RadioName = 1Live - Neu fuer den Sektor
+[28]> RadioURL = http://wdr-1live-neufuerdensektor.icecast.wdr.de/wdr/1live/neufuerdensektor/mp3/128/stream.mp3
+[29]> RadioTitleSeperator = -
+[30]> RadioTitleFirst = Artist
+[32]> RadioName = 1live - FritzBox
+[33]> RadioURL = http://192.168.178.1:49200/ST/AUDIO/DLNA-1-0/wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3
+[34]> RadioTitleSeperator = -
+[35]> RadioTitleFirst = Artist
+[37]> RadioName = ffh - FritzBox
+[38]> RadioURL = http://192.168.178.1:49200/ST/AUDIO/DLNA-1-0/mp3.ffh.de/radioffh/hqlivestream.mp3
+[39]> RadioTitleSeperator = -
+[40]> RadioTitleFirst = Artist
+setup_read_file> /setup.ini processed
+P_I2S_LRCK 43
+P_I2S_BCLK 44
+P_I2S_DATA 18
+P_ENC0_A 10
+P_ENC0_B 11
+P_ENC0_BTN 12
+P_ENC0_PWR 13
+P_ADC_BAT 255
+P_ADC_BAT 255
+Volume 0
+Radio 0: 1Live - http://wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3
+Radio 1: WDR2 - https://wdr-edge-301b-dus-ts-cdn.cast.addradio.de/wdr/wdr2/rheinland/mp3/128/stream.mp3
+Radio 2: SWR3 - http://mp3-live.swr3.de/swr3_m.m3u
+Radio 3: bigFM - http://streams.bigfm.de/hmr-128-mp3
+wifi::setup_wifi> default clientID: ESP32_1606964
+wifi::setup_wifi_preferences> read nvs
+wifi::setup_wifi_preferences> mqtt_clientID ESP32_1606964
+wifi::setup_wifi_preferences> mqtt_server   192.168.178.20
+wifi::setup_wifi_preferences> mqtt_port     1883
+wifi::setup_wifi_preferences> mqtt_prefix   house/
+setup>> WiFi connected
+wifi::mqtt_set_topics
+tele> house/tele/ESP32_1606964
+stat> house/stat/ESP32_1606964
+cmnd> house/cmnd/ESP32_1606964
+subscribe> house/cmnd/ESP32_1606964/#
+wifi::mqtt_init> > MQTT: mqtt.begin
+MQTT: connected
+setup_webServer> Inizializing FS...[0;33m[  3785][W][LittleFS.cpp:58] begin(): LittleFS Already Mounted![0m
+done.
+HTTP server started
+
+-------------------------------- Get System Info------------------------------------------
+Heap: Free:161571, Min:161471, Size:354355, Alloc:86016
+wifi> WiFi SSID: A-Team
+wifi> IP address: 192.168.178.151
+ (-78 db) wifi> signal    : 2 = -78 dBm
+NTP> Saturday, October 18 2025 17:04:43
+18.10.2025 17:04:43
+audio::setup_preferences> Preset 0
+audio::setup_preferences> Volume 10
+audio::setup_preferences> Number of restart times: 13
+setup_audio> begin
+
+-------------------------------- Staion Select ------------------------------------------
+audio::station_select> requested preset 1 of 8
+audio::station_select> Preset 1 : http://wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3
+audio::station_select> au.radioTitleSeperator -
+audio::station_select> au.radioArtistFirst 1
+audio::station_select> presetNo 1
+audio::station_select> mqtt publish >1<
+
+-------------------------------- Get System Info------------------------------------------
+Heap: Free:161479, Min:161247, Size:354355, Alloc:86016
+audio::station_select> set volume (0)
+audio::station_select> URL >http://wdr-1live-live.icecast.wdr.de/wdr/1live/live/mp3/128/stream.mp3<
+audio::station_select> conected<
+audio::station_select> mqtt publish >1Live<
+audio::station_select> mqtt wsSendArtistTitle 1Live /  
+wifi::wsSendArtistTitle> SongTitle >< (len: 0) Artist >1Live<
+wifi::wsSendTuner> Preset 1 , Volume 10
+main::main_displayUpdate
+main::displayReset
+myDisplay::clear
+listDir::Listing directory> /
+  FILE: fallbackCover.jpg  SIZE: 14385  LAST WRITE: 2025-10-13 15:43:36
+  FILE: favicon.ico  SIZE: 1150  LAST WRITE: 2025-10-13 15:43:36
+  FILE: index.html  SIZE: 1640  LAST WRITE: 2025-10-13 15:43:36
+  FILE: main.js  SIZE: 12701  LAST WRITE: 2025-10-13 15:43:36
+  FILE: radio.html  SIZE: 1029  LAST WRITE: 2025-10-13 15:43:36
+  FILE: radio.js  SIZE: 3955  LAST WRITE: 2025-10-13 15:43:36
+  FILE: setup.ini  SIZE: 1672  LAST WRITE: 2025-10-13 15:43:36
+  FILE: style.css  SIZE: 7361  LAST WRITE: 2025-10-13 15:43:36
+rotary::setup_rotary> done
+myDisplay::clear
+ (-79 db) wifi> signal    : 2 = -79 dBm
+NTP-Value Time: 17:04 / Date: 18.10.
+myDisplay::Gui1 drawstring >17:04<
+handleEvent(): pin: 14; eventType: 0; buttonState: 0
+handleEvent> unknown for pin 14 & 0
+handleEvent(): pin: 14; eventType: 2; buttonState: 1
+handleEvent> unknown for pin 14 & 2
+handleEvent(): pin: 14; eventType: 1; buttonState: 1
+handleEvent> preset_up for pin 14
+audio::audio_mode> preset: current 0 -> requested 1
+
+-------------------------------- Staion Select ------------------------------------------
+audio::station_select> requested preset 2 of 8
+audio::station_select> Preset 2 : https://wdr-edge-301b-dus-ts-cdn.cast.addradio.de/wdr/wdr2/rheinland/mp3/128/stream.mp3
+audio::station_select> au.radioTitleSeperator :
+audio::station_select> au.radioArtistFirst 1
+audio::station_select> presetNo 2
+audio::station_select> mqtt publish >2<
+
+-------------------------------- Get System Info------------------------------------------
+Heap: Free:158871, Min:157455, Size:354355, Alloc:86016
+audio::station_select> set volume (0)
+audio::station_select> URL >https://wdr-edge-301b-dus-ts-cdn.cast.addradio.de/wdr/wdr2/rheinland/mp3/128/stream.mp3<
+[0;31m[ 47927][E][NetworkManager.cpp:136] hostByName(): DNS Failed for 'wdr-edge-301b-dus-ts-cdn.cast.addradio.de' with error '-54'[0m
+[0;31m[ 55527][E][ssl_client.cpp:150] start_ssl_client(): socket error on fd 45, errno: 113, "Software caused connection abort"[0m
+[0;32m[ 55539][I][NetworkClientSecure.cpp:153] connect(): Actual TLS start postponed.[0m
+[0;31m[ 55547][E][NetworkClientSecure.cpp:159] connect(): start_ssl_client: connect failed: -1[0m
+[0;31m[ 55556][E][Audio.h:644] AUDIO_LOG_IMPL(): Audio.cpp:684 [31mRequest https://wdr-edge-301b-dus-ts-cdn.cast.addradio.de/wdr/wdr2/rheinland/mp3/128/stream.mp3 failed![0m[0m
+audio::station_select> conected<
+audio::station_select> mqtt publish >WDR2<
+audio::station_select> mqtt wsSendArtistTitle WDR2 /  
+wifi::wsSendArtistTitle> SongTitle >< (len: 0) Artist >WDR2<
+wifi::wsSendTuner> Preset 2 , Volume 10
+main::main_displayUpdate 2
+main::displayReset
+myDisplay::clear
+audio::audio_mode> 7: Station 1, Volume 10
+main::main_displayUpdate 2
+wifi::wsSendTuner> Preset 2 , Volume 10
+ (-75 db) wifi> signal    : 2 = -75 dBm
+NTP-Value Time: 17:05 / Date: 18.10.
+myDisplay::Gui1 drawstring >17:05<
+NTP-loop>  Time:  / Date: 18.10.
+handleEvent(): pin: 14; eventType: 0; buttonState: 0
+handleEvent> unknown for pin 14 & 0
+handleEvent(): pin: 14; eventType: 2; buttonState: 1
+handleEvent> unknown for pin 14 & 2
+handleEvent(): pin: 14; eventType: 1; buttonState: 1
+handleEvent> preset_up for pin 14
+audio::audio_mode> preset: current 1 -> requested 2
+
+-------------------------------- Staion Select ------------------------------------------
+audio::station_select> requested preset 3 of 8
+audio::station_select> Preset 3 : http://mp3-live.swr3.de/swr3_m.m3u
+audio::station_select> au.radioTitleSeperator /
+audio::station_select> au.radioArtistFirst 0
+audio::station_select> presetNo 3
+audio::station_select> mqtt publish >3<
+
+-------------------------------- Get System Info------------------------------------------
+Heap: Free:161495, Min:157455, Size:354355, Alloc:86016
+audio::station_select> set volume (0)
+audio::station_select> URL >http://mp3-live.swr3.de/swr3_m.m3u<
+audio::station_select> conected<
+audio::station_select> mqtt publish >SWR3<
+audio::station_select> mqtt wsSendArtistTitle SWR3 /  
+wifi::wsSendArtistTitle> SongTitle >< (len: 0) Artist >SWR3<
+wifi::wsSendTuner> Preset 3 , Volume 10
+main::main_displayUpdate 2
+main::displayReset
+myDisplay::clear
+audio::audio_mode> 7: Station 2, Volume 10
+main::main_displayUpdate 2
+wifi::wsSendTuner> Preset 3 , Volume 10
+myDisplay::clear
+myDisplay::Gui3 drawstring PRESET>3<
+myDisplay::Gui3 drawstring NAME  >SWR3<
+myDisplay::clear
+ (-74 db) wifi> signal    : 2 = -74 dBm
+NTP-Value Time: 17:05 / Date: 18.10.
+myDisplay::Gui1 drawstring >17:05<
+handleEvent(): pin: 14; eventType: 0; buttonState: 0
+handleEvent> unknown for pin 14 & 0
+handleEvent(): pin: 14; eventType: 1; buttonState: 1
+handleEvent> preset_up for pin 14
+audio::audio_mode> preset: current 2 -> requested 3
+
+-------------------------------- Staion Select ------------------------------------------
+audio::station_select> requested preset 4 of 8
+audio::station_select> Preset 4 : http://streams.bigfm.de/hmr-128-mp3
+audio::station_select> au.radioTitleSeperator -
+audio::station_select> au.radioArtistFirst 1
+audio::station_select> presetNo 4
+audio::station_select> mqtt publish >4<
+
+-------------------------------- Get System Info------------------------------------------
+Heap: Free:161495, Min:157455, Size:354355, Alloc:86016
+audio::station_select> set volume (0)
+audio::station_select> URL >http://streams.bigfm.de/hmr-128-mp3<
+audio::station_select> conected<
+audio::station_select> mqtt publish >bigFM<
+audio::station_select> mqtt wsSendArtistTitle bigFM /  
+wifi::wsSendArtistTitle> SongTitle >< (len: 0) Artist >bigFM<
+wifi::wsSendTuner> Preset 4 , Volume 10
+main::main_displayUpdate 2
+main::displayReset
+myDisplay::clear
+audio::audio_mode> 7: Station 3, Volume 10
+main::main_displayUpdate 2
+wifi::wsSendTuner> Preset 4 , Volume 10
+ (-74 db) wifi> signal    : 2 = -74 dBm
+NTP-Value Time: 17:05 / Date: 18.10.
+myDisplay::Gui1 drawstring >17:05<
+handleEvent(): pin: 14; eventType: 0; buttonState: 0
+handleEvent> unknown for pin 14 & 0
+handleEvent(): pin: 14; eventType: 2; buttonState: 1
+handleEvent> unknown for pin 14 & 2
+handleEvent(): pin: 14; eventType: 1; buttonState: 1
+handleEvent> preset_up for pin 14
+audio::audio_mode> preset: current 3 -> requested 4
+
+-------------------------------- Staion Select ------------------------------------------
+audio::station_select> requested preset 5 of 8
+audio::station_select> Preset 5 : http://player.ffn.de/ffn.mp3
+audio::station_select> au.radioTitleSeperator -
+audio::station_select> au.radioArtistFirst 1
+audio::station_select> presetNo 5
+audio::station_select> mqtt publish >5<
+
+-------------------------------- Get System Info------------------------------------------
+Heap: Free:149319, Min:146155, Size:354355, Alloc:73728
+audio::station_select> set volume (0)
+audio::station_select> URL >http://player.ffn.de/ffn.mp3<
+audio::station_select> conected<
+audio::station_select> mqtt publish >ffn<
+audio::station_select> mqtt wsSendArtistTitle ffn /  
+wifi::wsSendArtistTitle> SongTitle >< (len: 0) Artist >ffn<
+wifi::wsSendTuner> Preset 5 , Volume 10
+main::main_displayUpdate 2
+main::displayReset
+myDisplay::clear
+audio::audio_mode> 7: Station 4, Volume 10
+main::main_displayUpdate 2
+wifi::wsSendTuner> Preset 5 , Volume 10
+myDisplay::clear
+myDisplay::Gui3 drawstring PRESET>5<
+myDisplay::Gui3 drawstring NAME  >ffn<
+myDisplay::clear
+ (-75 db) wifi> signal    : 2 = -75 dBm
+NTP-Value Time: 17:06 / Date: 18.10.
+myDisplay::Gui1 drawstring >17:06<
+NTP-loop>  Time: 17:05 / Date: 18.10.
+NTP-loop>  Time: 17:06 / Date: 18.10.
+NTP-loop>  Time: 17:07 / Date: 18.10.
+NTP-loop>  Time: 17:08 / Date: 18.10.
+NTP-loop>  Time: 17:09 / Date: 18.10.

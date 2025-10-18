@@ -85,6 +85,8 @@ void rotary_loop()
         else
             ignoreNextChange = false;
     }
+    yield();
+    taskYIELD();
 } // end of function
 
 //-------------------------------------------------------------------------------------------------------
@@ -121,4 +123,6 @@ void setup_rotary()
 void loop_rotary()
 {
     rotary_loop();
+    yield();
+    taskYIELD();
 } // end of function
