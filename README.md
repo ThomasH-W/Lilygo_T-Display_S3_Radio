@@ -10,7 +10,8 @@ https://www.lilygo.cc/products/t-display-s3
 
 If you want to use a diufferent board please keep in mind to use an ESP32 with PSRAM as it is required by https://github.com/schreibfaul1/ESP32-audioI2S.
 
-
+last
+    song titlw fixed
 
 Open Issues:
     connect audio device
