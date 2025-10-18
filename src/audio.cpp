@@ -44,6 +44,8 @@ unsigned long currentMillisAudioLoop = 0, previousMillisRotary = 0, intervalRota
 unsigned long previousPreSelectMillis = 0, intervalPreSelectLoop = 3000;
 unsigned long previousTitleUpdateMillis = 0, intervalTitleUpdatePanic = 10 * 60 * 1000; // 10 minutes
 
+
+
 //-----------------------------------------------------------------------------------------
 // when rotary encoder button is pressed, toggle mode
 // a) change volume
@@ -245,6 +247,7 @@ void station_select(int stationID)
 {
     char buf[20];
     int presetNo;
+    bool retcode;
 
     presetNo = stationID + 1; // array index 0...9; preset 1...10
 
@@ -293,13 +296,21 @@ void station_select(int stationID)
         serial_d_printf("audio::station_select> set volume (0)\n");
         audio.setVolume(0); // 0...21
         delay(10);
+
+        // ------------------------ connect to host -----------------------------
         serial_d_printf("audio::station_select> URL >%s<\n", setupRadio[stationID].RadioURL);
-        audio.connecttohost(setupRadio[stationID].RadioURL); //  start streaming
-        serial_d_printf("audio::station_select> conected<\n");
+        retcode = audio.connecttohost(setupRadio[stationID].RadioURL); //  start streaming
+        if(retcode)
+            serial_d_printf("audio::station_select> connected\n");
+        else
+            serial_d_printf("ERROR audio::station_select> connection failed\n");
+        
         au.update = UP_PRESET;
         delay(20);
+
         serial_d_printf("audio::station_select> mqtt publish >%s<\n", setupRadio[stationID].RadioName);
         mqtt_pub_tele("Preset", setupRadio[stationID].RadioName);
+
         strncpy(au.radioName, setupRadio[stationID].RadioName, sizeof(au.radioName));
         serial_d_printf("audio::station_select> mqtt wsSendArtistTitle %s / %s \n", au.radioArtist, au.radioSongTitle);
         webSocketSendArtistTitle(au.radioArtist, au.radioSongTitle);
@@ -382,6 +393,8 @@ void audio_showstation(const char *info)
     Serial.println(info);
     mqtt_pub_tele("Station", info);
 }
+// callbacks
+//-----------------------------------------------------------------------------------------
 void audio_showstreamtitle(const char *info)
 {
     previousTitleUpdateMillis = millis();
@@ -464,6 +477,26 @@ void audio_eof_speech(const char *info)
     Serial.println(info);
 }
 
+
+// callbacks
+void my_audio_info(Audio::msg_t m) {
+    Serial.printf("audio::my_audio_info: %s: %s\n", m.s, m.msg);
+    if(strcmp(m.s, "streamtitle") == 0) {
+        audio_showstreamtitle(m.msg);
+    } else if(strcmp(m.s, "station_name") == 0) {
+        audio_showstation(m.msg);
+    } else if(strcmp(m.s, "icy_url") == 0) {
+        audio_icyurl(m.msg);
+    } else if(strcmp(m.s, "info") == 0) {
+        audio_info(m.msg);
+    }
+    /*
+    audio::my_audio_info: streamtitle: TOBY ROMEO UND YOUNOTUS - WHAT IT FEELS LIKE
+    audio::my_audio_info: station_name: ffn
+    audio::my_audio_info: icy_url: http://www.ffn.de
+    audio::my_audio_info: info: MP3Decoder has been initialized
+    */
+}
 // -----------------------------------------------------------------------------------------
 // debug: print GPIO config
 void setup_show_data()
@@ -748,10 +781,13 @@ void setup_audio_preferences()
     preferences.end();
 } // end of function
 
+
+
 //-----------------------------------------------------------------------------------------
 // set I2S aduio interface and start streaming
 audio_data_struct *setup_audio()
 {
+    Audio::audio_info_callback = my_audio_info; // optional
     setup_audio_preferences();
 
     Serial.println("setup_audio> begin");
@@ -769,6 +805,8 @@ audio_data_struct *setup_audio()
 void loop_audio()
 {
     audio.loop();
+    taskYIELD();
+
     if (Serial.available())
     { // put streamURL in serial monitor
         audio.stopSong();
@@ -794,11 +832,14 @@ void loop_audio()
         previousMillisRotary = millis();
     }
 
+    /*
     if (currentMillisAudioLoop - previousTitleUpdateMillis > intervalTitleUpdatePanic)
     { // after Title has not been updated for some time, assume that connection broken down
-      Serial.printf("audio::loop_audio> Title update timeout exceeded %d min\n", intervalTitleUpdatePanic / 1000 /60);
-      // ESP.restart();
+    Serial.printf("audio::loop_audio> Title update timeout exceeded %d min\n", intervalTitleUpdatePanic / 1000 /60);
+    // ESP.restart();
     }
+    */
+
     yield();
-    vTaskDelay(1);
+    taskYIELD();
 } // end of function

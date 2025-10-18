@@ -14,4 +14,3 @@ If you want to use a diufferent board please keep in mind to use an ESP32 with P
 
 Open Issues:
     connect audio device
-    myDisplay.h: included of tft file
