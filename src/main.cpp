@@ -249,16 +249,20 @@ void displayLoop(void)
     taskYIELD();
 } // end of function
 
+
 // --------------------------------------------------------------------------
 void setup()
 {
   Serial.begin(MONITOR_SPEED);
-  while (!Serial);// auf serielle Verbindung warten
-  delay(500);
+  uint32_t const start = millis();
+  while ((!Serial) && ((millis() - start) < 300UL));
   serial_println("-------------------------------------------------------- setup");
 
-  //#define TFT_BL 38
-  pinMode( TFT_BL, OUTPUT); // fix runtime: __digitalWrite(): IO 38 is not set as GPIO. Execute digitalMode(38, OUTPUT) first
+  pinMode(PIN_POWER_ON, OUTPUT);  //triggers the LCD backlight
+  pinMode(PIN_LCD_BL, OUTPUT);    // BackLight enable pin
+  
+  digitalWrite(PIN_POWER_ON, HIGH);
+  digitalWrite(PIN_LCD_BL, HIGH); 
 
   myDisplay1.begin(); // start display
   myDisplay1.println("> Boot TTGO-Radio ...");
@@ -266,7 +270,6 @@ void setup()
   setup_gpio_pins(); // get default gpio pins
   setup_button();
 
-  delay(1000);
   myDisplay1.print("> Firmware ");
   myDisplay1.println(FIRMWARE_VERSION);
 

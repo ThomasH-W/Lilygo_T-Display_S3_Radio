@@ -17,10 +17,13 @@
 #define TFT_BL 38
 */
 
+#define PIN_POWER_ON 15  // LCD and battery Power Enable
+#define PIN_LCD_BL 38    // BackLight enable pin (see Dimming.txt)
+
 // I2S
-#define PIN_I2S_LRCK 43
-#define PIN_I2S_BCLK 44
-#define PIN_I2S_DATA 18
+#define PIN_I2S_LRCK 43 // yellow
+#define PIN_I2S_BCLK 44 // pink
+#define PIN_I2S_DATA 18 // grey
 
 // Rotary Encoder: swap A / B to change direction
 #define PIN_ENC0_A 10   // #pin A clk
