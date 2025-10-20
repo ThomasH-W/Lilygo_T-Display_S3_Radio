@@ -103,6 +103,8 @@ The direction can be changed by swapping A + B.
 
 ![GPIO](README/images/ESP_Radio_GPIO.jpg)
 
+Housing is a 3D-print: https://makerworld.com/de/models/1622614-tempoview-lilygo-t-display?from=search#profileId-1713078 
+
 ## Software 
 
 To install the software you need to create the binary and uplad the content of the data folder.
@@ -161,3 +163,19 @@ Once binary is uploaded to the ESP32 you need to power off/on.
 After power on, device will create an access point.
 Connect with your smartphone and select your WiFi network as well as settgin a device name.
 Device will reboot and immediately connect to the first radio station.
+
+# Other
+
+## general
+
+https://www.lilygo.cc/products/t-display-s3 
+
+https://www.espboards.dev/esp32/lilygo-t-display-s3/
+
+https://stevezafeiriou.com/lilygo-t-display-s3-setup/ 
+
+## ESP32 Board Config for platformio
+https://github.com/kylefmohr/esp32-platformio.ini-configs/blob/main/waveshare-esp32-s3-lcd-1_47-platformio.ini
+
+
+https://github.com/Xinyuan-LilyGO/LilyGo-Display-IDF/blob/master/sdkconfig.defaults.t-display-s3
