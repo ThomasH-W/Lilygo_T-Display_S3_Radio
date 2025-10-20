@@ -68,7 +68,7 @@ Upon first boot, the wifi  manager will start and ask for wifi credentials as we
 
 ![TTGO-1](README/images/ESP_Radio_1.jpg)
 
-Despite of the TTGO you need the audio decoder and a rotary encoder.
+Despite of the TTGO you need the audio decoder. Optional is a rotary encoder in order to change volume and stations.
 Note: PINS are defined in GPIO_PINS.h
 
 ### Digital / Analog Converter – DAC
