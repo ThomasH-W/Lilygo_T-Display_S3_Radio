@@ -28,6 +28,7 @@ public:
     int version(void);
     void Text(const char *co2Char, const char *tempChar);
     void Gui1(audio_data_struct *sData, wifi_data_struct *wData);
+    void Gui1OLD(audio_data_struct *sData, wifi_data_struct *wData);
     void Gui2(audio_data_struct *sData);
     void Gui0();
     void Gui3(audio_data_struct *sData);

@@ -4,7 +4,7 @@
 #ifndef MAIN_h
 #define MAIN_h
 
-#define FIRMWARE_VERSION "2.0.0"
+#define FIRMWARE_VERSION "2.0.2"
 
 #include "Arduino.h"
 #include "FS.h"
@@ -63,6 +63,8 @@ struct audio_data_struct
     bool radioArtistFirst = true;
     bool radioRotaryVolume = true;
     bool preSelect = false;
+    bool radioRunning = false;
+    bool radioPoor = false;
     int update = UP_INFO;
 };
 

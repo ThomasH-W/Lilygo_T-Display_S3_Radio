@@ -362,6 +362,14 @@ void audio_info(const char *info)
     char buf[20];
     Serial.print("info        ");
     Serial.println(info);
+
+    // info        slow stream, dropouts are possible
+    if (strncmp(info, "slow stream", 6) == 0)
+    {
+        mqtt_pub_tele("AudioQuality", "slow stream, dropouts are possible");
+        au.radioPoor = true;
+    }
+
     if (strncmp(info, "BitRate", 6) == 0)
     {
         sprintf(buf, "%d", atoi(strstr(info, ": ") + 2) / 1000);
@@ -804,6 +812,8 @@ audio_data_struct *setup_audio()
 // timer is used when new preset is selected by rotaray encoder
 void loop_audio()
 {
+    char buf[20];
+
     audio.loop();
     taskYIELD();
 
@@ -839,6 +849,37 @@ void loop_audio()
     // ESP.restart();
     }
     */
+
+    
+    // code below is intended to catch if streaming fails
+    if (currentMillisAudioLoop - previousTitleUpdateMillis > intervalTitleUpdatePanic)
+    { // after Title has not been updated for some time, assume that connection broken down
+        mqtt_pub_tele("AudioQuality", "");
+        au.radioPoor = false;
+
+        if (audio.isRunning() == false)
+        {
+            Serial.printf("audio::loop_audio> Title update timeout exceeded - audio NOT running \n");
+            mqtt_pub_tele("Audio", "not running");
+            au.radioRunning = false;
+            // do what: reboot, restart-stream ?
+            // Serial.printf("audio::loop_audio> Title update timeout exceeded %d min\n", intervalTitleUpdatePanic / 1000 /60);
+            // ESP.restart();
+        }
+        else
+        {
+            Serial.printf("audio::loop_audio> Title update timeout exceeded - audio running\n");
+            mqtt_pub_tele("Audio", "Running");
+            au.radioRunning = true;
+        }
+        // uint32_t au_str = audio.streamavail(); // lib moved it to private function
+        uint32_t au_str = (uint32_t) audio.isRunning(); // is boolean
+        Serial.printf("audio::loop_audio> stream %d\n", au_str);
+        sprintf(buf, "%d", au_str);
+        mqtt_pub_tele("AudioStream", buf);
+
+        previousTitleUpdateMillis = millis();
+    }
 
     yield();
     taskYIELD();

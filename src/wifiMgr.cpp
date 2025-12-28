@@ -90,6 +90,9 @@ bool shouldSaveConfig = false;
 
 wifi_data_struct wifi_data;
 
+// WiFi setup: reboot ESP if WiFi connections is not established within 10s
+unsigned long currentMillisWifiLoop =0,  previousMillisWifi = 0,  intervalWifiLoop=10000;
+
 // --------------------------------------------------------------------------
 // dummy function uased a template
 void wifi_foo()
@@ -646,9 +649,18 @@ void setup_wifi()
     // setup_read_fs_values();
     setup_wifi_preferences();
 
+    serial_d_printf("wifi::setup_wifi> SSID: %s\n", MY_WIFI_SSID);
     WiFi.mode(WIFI_STA); // explicitly set mode, esp defaults to STA+AP
     WiFi.begin(MY_WIFI_SSID, MY_WIFI_PWD);
-    while (WiFi.status() != WL_CONNECTED) delay(1500);
+
+    currentMillisWifiLoop = millis();
+    while (WiFi.status() != WL_CONNECTED) {
+       if (currentMillisWifiLoop - previousMillisWifi > intervalWifiLoop)
+        { // after a few seconds restart
+        ESP.restart();
+        }
+        delay(1500);
+    }
     Serial.println("setup>> WiFi connected");
 
     mqtt_init();

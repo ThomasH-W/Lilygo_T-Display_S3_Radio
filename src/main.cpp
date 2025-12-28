@@ -53,7 +53,9 @@ AceButton button4(BUTTON4_PIN);
 void handleEvent(AceButton *, uint8_t, uint8_t);
 const int LED_PIN = 2; // for ESP32
 
-audio_data_struct *audio_data_ptr;
+struct audio_data_struct audio_data;
+struct audio_data_struct *audio_data_ptr = &audio_data; 
+
 wifi_data_struct *wifi_data_ptr;
 
 bool displayUpdate = false;

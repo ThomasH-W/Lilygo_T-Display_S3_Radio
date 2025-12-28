@@ -174,45 +174,157 @@ void myDisplay::Gui0()
 void myDisplay::Gui1(audio_data_struct *aData, wifi_data_struct *wData)
 {
     char buf[100];
-    // 240 * 135
+    // prior: 240x135 , now 320x170
     myTFT.fillScreen(TFT_BLACK);
     myTFT.setTextColor(TFT_WHITE, TFT_BLACK);
 
-    wfiSignal(200, 133, 18, wData->rssiLevel); // x=100, y=100, max=22
-
-    myTFT.drawString(aData->radioArtist, 2, 30, 4);    // string, x,y, font
-    myTFT.drawString(aData->radioSongTitle, 2, 75, 4); // string, x,y, font
-
-    myTFT.drawLine(1, 100, tft_w, 100, TFT_WHITE); // xs,ys,xe,ye,col);
-
-    int yInfo = 122;
+    // myTFT.drawLine(1, 100, tft_w, 100, TFT_WHITE); // xs,ys,xe,ye,col);
+    
+    // prior: 240x135 , now 320x170
+    int yInfo = 40;
+    int yInfo2 = 16;
+    
+    // myTFT.drawString(aData->radioBitRate, 60, yInfo, 2); // string, x,y, font
+    // VOLUME and MUTE
     sprintf(buf, "Vol %d", aData->radioCurrentVolume);
     if (aData->radioMute)
     {
         myTFT.setTextColor(TFT_RED, TFT_BLACK);
-        myTFT.drawString("mute   ", 2, yInfo, 2); // string, x,y, font
+        myTFT.drawString("mute   ", 2, yInfo2, 2); // string, x,y, font
         // https://github.com/Bodmer/TFT_eSPI/blob/master/examples/Generic/ESP32_SDcard_jpeg/ESP32_SDcard_jpeg.ino
         myTFT.setTextColor(TFT_WHITE, TFT_BLACK);
     }
     else
     {
-        myTFT.drawString(buf, 2, yInfo, 2); // string, x,y, font
+        myTFT.drawString(buf, 2, yInfo2, 2); // string, x,y, font
     }
-
-    // myTFT.drawString(aData->radioBitRate, 60, yInfo, 2); // string, x,y, font
-
-    // show time from ntp
+    
+    
+    // WiFi SIGNAL
+    sprintf(buf, "lvl %d", wData->rssiLevel);
+    if(wData->rssiLevel<3)
+        myTFT.drawString(buf, 70, yInfo2, 2); // string, x,y, font
+    if(wData->rssiLevel<2)
+        myTFT.fillRect(100, yInfo2-5, 10, 10, TFT_RED); // x / y / width / height of rectangle in pixels
+    else if (wData->rssiLevel<3)
+        myTFT.fillRect(100, yInfo2-5, 10, 10, TFT_YELLOW); // x / y / width / height of rectangle in pixels
+    else
+        myTFT.fillRect(100, yInfo2-5, 10, 10, TFT_GREEN); // width / height of rectangle in pixels
+    wfiSignal(120, yInfo2+5, 18, wData->rssiLevel); // x=100, y=100, max=22
+    
+    
+    
+    // TIME from ntp
     Serial.printf("myDisplay::Gui1 drawstring >%s<\n", wData->timeOfDayChar);
-    myTFT.drawString(wData->timeOfDayChar, 60, yInfo, 2); // string, x,y, font
-
-    // show current station
-    // sprintf(buf, "%d - %s", aData->radioCurrentStation + 1, aData->radioName);
-    // myTFT.drawString(buf, 95, yInfo, 2); // string, x,y, font
-    myTFT.drawString(aData->radioName, 110, yInfo, 2); // string, x,y, font
-
+    myTFT.setTextColor(TFT_BLUE, TFT_BLACK);
+    // myTFT.drawString(wData->timeOfDayChar, 200, yInfo+12, 4); // string, x,y, font
+    myTFT.drawString(wData->timeOfDayChar, 180, yInfo - 5, 6); // string, x,y, font
+    
+    
+    // show current STATION
+    if (aData->radioPoor==true)
+    {
+        myTFT.setTextColor(TFT_YELLOW, TFT_BLACK);
+        myTFT.fillRect(2, yInfo-5, 10, 10, TFT_YELLOW); // width / height of rectangle in pixels
+    }
+    // myTFT.fillRect(2, yInfo-5, 10, 10, TFT_GREEN); // width / height of rectangle in pixels     
+    myTFT.drawString(aData->radioName, 20, yInfo, 2); // string, x,y, font
+    myTFT.setTextColor(TFT_WHITE, TFT_BLACK);
+    
+    
+    // ARTIST + SONG TITLE
+    myTFT.drawString(aData->radioArtist, 20, 90, 4);    // string, x,y, font
+    if (aData->radioRunning == false)
+    {
+        myTFT.setTextColor(TFT_RED, TFT_BLACK);
+        myTFT.fillRect(2, 85, 10, 10, TFT_RED); // x / y / width / height of rectangle in pixels
+    }
+    //else
+    //    myTFT.fillRect(2, 85, 10, 10, TFT_GREEN); // x / y / width / height of rectangle in pixels
+    myTFT.setTextColor(TFT_WHITE, TFT_BLACK);
+    myTFT.drawString(aData->radioSongTitle, 2, 135, 4); // string, x,y, font
+    
     printlines = 0;
 } // end of function
 
+// ------------------------------------------------------------------------------------------------------------------------
+// 1 Default - Song/Artist
+void myDisplay::Gui1OLD(audio_data_struct *aData, wifi_data_struct *wData)
+{
+    char buf[100];
+    // 240 * 135
+    myTFT.fillScreen(TFT_BLACK);
+    myTFT.setTextColor(TFT_WHITE, TFT_BLACK);
+
+    // ARTIST + SONG TITLE
+    myTFT.drawString(aData->radioSongTitle, 2, 75, 4); // string, x,y, font
+    if (aData->radioRunning == false)
+        {
+        myTFT.setTextColor(TFT_RED, TFT_BLACK);
+        myTFT.fillRect(2, 30, 10, 10, TFT_RED); // width / height of rectangle in pixels
+        }
+    else
+        myTFT.fillRect(2, 30, 10, 10, TFT_GREEN); // width / height of rectangle in pixels
+    myTFT.drawString(aData->radioArtist, 20, 30, 4);    // string, x,y, font
+
+
+    myTFT.drawLine(1, 100, tft_w, 100, TFT_WHITE); // xs,ys,xe,ye,col);
+
+    // prior: 240x135 , now 320x170
+    int yInfo = 122;
+    int yInfo2 = 152;
+
+    // myTFT.drawString(aData->radioBitRate, 60, yInfo, 2); // string, x,y, font
+
+    // TIME from ntp
+    Serial.printf("myDisplay::Gui1 drawstring >%s<\n", wData->timeOfDayChar);
+    myTFT.setTextColor(TFT_BLUE, TFT_BLACK);
+    // myTFT.drawString(wData->timeOfDayChar, 200, yInfo+12, 4); // string, x,y, font
+    myTFT.drawString(wData->timeOfDayChar, 180, yInfo+14, 6); // string, x,y, font
+
+
+    // show current STATION
+    if (aData->radioPoor==true)
+        {
+        myTFT.setTextColor(TFT_YELLOW, TFT_BLACK);
+        myTFT.fillRect(2, 118, 10, 10, TFT_YELLOW); // width / height of rectangle in pixels
+        }
+    else
+        myTFT.fillRect(2, 118, 10, 10, TFT_GREEN); // width / height of rectangle in pixels
+
+
+    myTFT.drawString(aData->radioName, 20, yInfo, 2); // string, x,y, font
+    myTFT.setTextColor(TFT_WHITE, TFT_BLACK);
+
+
+    // VOLUME and MUTE
+    sprintf(buf, "Vol %d", aData->radioCurrentVolume);
+    if (aData->radioMute)
+    {
+        myTFT.setTextColor(TFT_RED, TFT_BLACK);
+        myTFT.drawString("mute   ", 2, yInfo2, 2); // string, x,y, font
+        // https://github.com/Bodmer/TFT_eSPI/blob/master/examples/Generic/ESP32_SDcard_jpeg/ESP32_SDcard_jpeg.ino
+        myTFT.setTextColor(TFT_WHITE, TFT_BLACK);
+    }
+    else
+    {
+        myTFT.drawString(buf, 2, yInfo2, 2); // string, x,y, font
+    }
+
+
+    // WiFi SIGNAL
+    sprintf(buf, "lvl %d", wData->rssiLevel);
+    myTFT.drawString(buf, 70, yInfo2, 2); // string, x,y, font
+    if(wData->rssiLevel<1)
+        myTFT.fillRect(100, yInfo2-5, 10, 10, TFT_YELLOW); // x / y / width / height of rectangle in pixels
+    else
+        myTFT.fillRect(100, yInfo2-5, 10, 10, TFT_GREEN); // width / height of rectangle in pixels
+    wfiSignal(120, yInfo2+5, 18, wData->rssiLevel); // x=100, y=100, max=22
+        
+
+
+    printlines = 0;
+} // end of function
 // ------------------------------------------------------------------------------------------------------------------------
 // 2 Volume
 void myDisplay::Gui2(audio_data_struct *aData)
