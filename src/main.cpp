@@ -198,11 +198,18 @@ void displayReset(void)
 void displayLoop(void)
 {
   currentMillisLoop = millis();
+  // if mode is not ST_GUI_1 fallback after interval
   if (currentMillisLoop - previousMillisDisplay > intervalDisplayLoop)
   {
     audio_data_ptr->update = UP_INFO;
     mode = ST_GUI_1;
     previousMillisDisplay = millis();
+  }
+
+  // refresh after 30s
+  if (currentMillisLoop - previousMillisDisplay > 30000)
+  {
+    displayUpdate = true;
   }
 
   switch (audio_data_ptr->update)
@@ -311,6 +318,8 @@ void setup()
 void loop()
 {
   loop_wifi(); // update mqtt
+  delay(1);
+
   loop_rotary();
   loop_audio();
   myNtp.loop();

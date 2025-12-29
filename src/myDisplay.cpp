@@ -175,7 +175,7 @@ void myDisplay::Gui1(audio_data_struct *aData, wifi_data_struct *wData)
 {
     char buf[100];
     // prior: 240x135 , now 320x170
-    myTFT.fillScreen(TFT_BLACK);
+    //myTFT.fillScreen(TFT_BLACK);
     myTFT.setTextColor(TFT_WHITE, TFT_BLACK);
 
     // myTFT.drawLine(1, 100, tft_w, 100, TFT_WHITE); // xs,ys,xe,ye,col);
